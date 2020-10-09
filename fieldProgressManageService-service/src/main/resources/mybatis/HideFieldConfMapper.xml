@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.HideFieldConfMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.HideFieldConfEntity">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="service_type" jdbcType="INTEGER" property="serviceType" />
+    <result column="module_type" jdbcType="VARCHAR" property="moduleType" />
+    <result column="hide_field" jdbcType="LONGVARCHAR" property="hideField" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, service_type, module_type, create_time, hide_field
+  </sql>
+
+  <select id="queryByServerType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from hide_field_conf where service_type = #{serviceType}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.HideFieldConfEntity">
+    insert into hide_field_conf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceType != null">
+        service_type,
+      </if>
+      <if test="moduleType != null">
+        module_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="hideField != null">
+        hide_field,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serviceType != null">
+        #{serviceType,jdbcType=INTEGER},
+      </if>
+      <if test="moduleType != null">
+        #{moduleType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hideField != null">
+        #{hideField,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

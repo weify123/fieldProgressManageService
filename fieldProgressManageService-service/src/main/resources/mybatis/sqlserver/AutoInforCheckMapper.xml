@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoInforCheckMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoInforCheckEntity">
+    <id column="auto_check_id" jdbcType="BIGINT" property="autoCheckId" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="auto_check_getcarmileage" jdbcType="NVARCHAR" property="autoCheckGetcarmileage" />
+    <result column="auto_check_getcaroil" jdbcType="NVARCHAR" property="autoCheckGetcaroil" />
+    <result column="auto_check_sendcarmileage" jdbcType="NVARCHAR" property="autoCheckSendcarmileage" />
+    <result column="auto_check_sendcaroil" jdbcType="NVARCHAR" property="autoCheckSendcaroil" />
+    <result column="auto_check_vehiclelicense" jdbcType="NVARCHAR" property="autoCheckVehiclelicense" />
+    <result column="auto_check_insurancemark" jdbcType="NVARCHAR" property="autoCheckInsurancemark" />
+    <result column="auto_check_yearstandard" jdbcType="NVARCHAR" property="autoCheckYearstandard" />
+    <result column="auto_check_environmentstandard" jdbcType="NVARCHAR" property="autoCheckEnvironmentstandard" />
+    <result column="auto_check_carkey" jdbcType="NVARCHAR" property="autoCheckCarkey" />
+    <result column="auto_check_footpad" jdbcType="NVARCHAR" property="autoCheckFootpad" />
+    <result column="auto_check_trumpet" jdbcType="NVARCHAR" property="autoCheckTrumpet" />
+    <result column="auto_check_dashboard" jdbcType="NVARCHAR" property="autoCheckDashboard" />
+    <result column="auto_check_wiper" jdbcType="NVARCHAR" property="autoCheckWiper" />
+    <result column="auto_check_aircondition" jdbcType="NVARCHAR" property="autoCheckAircondition" />
+    <result column="auto_check_radio" jdbcType="NVARCHAR" property="autoCheckRadio" />
+    <result column="auto_check_doorwindow" jdbcType="NVARCHAR" property="autoCheckDoorwindow" />
+    <result column="auto_check_trim" jdbcType="NVARCHAR" property="autoCheckTrim" />
+    <result column="auto_check_safetybelt" jdbcType="NVARCHAR" property="autoCheckSafetybelt" />
+    <result column="auto_check_retroreflecot" jdbcType="NVARCHAR" property="autoCheckRetroreflecot" />
+    <result column="auto_check_interiormirror" jdbcType="NVARCHAR" property="autoCheckInteriormirror" />
+    <result column="auto_check_turnlight" jdbcType="NVARCHAR" property="autoCheckTurnlight" />
+    <result column="auto_check_headlamp" jdbcType="NVARCHAR" property="autoCheckHeadlamp" />
+    <result column="auto_check_taillight" jdbcType="NVARCHAR" property="autoCheckTaillight" />
+    <result column="auto_check_dashboardphoto" jdbcType="NVARCHAR" property="autoCheckDashboardphoto" />
+    <result column="auto_check_carrecord" jdbcType="NVARCHAR" property="autoCheckCarrecord" />
+    <result column="auto_check_outergps" jdbcType="NVARCHAR" property="autoCheckOutergps" />
+    <result column="auto_check_childseat" jdbcType="NVARCHAR" property="autoCheckChildseat" />
+    <result column="auto_check_carcharger" jdbcType="NVARCHAR" property="autoCheckCarcharger" />
+    <result column="auto_check_edog" jdbcType="NVARCHAR" property="autoCheckEdog" />
+    <result column="auto_check_phoneholder" jdbcType="NVARCHAR" property="autoCheckPhoneholder" />
+    <result column="auto_check_phonepower" jdbcType="NVARCHAR" property="autoCheckPhonepower" />
+    <result column="auto_check_etc" jdbcType="NVARCHAR" property="autoCheckEtc" />
+    <result column="auto_check_backburner" jdbcType="NVARCHAR" property="autoCheckBackburner" />
+    <result column="auto_check_kitbag" jdbcType="NVARCHAR" property="autoCheckKitbag" />
+    <result column="auto_check_carjack" jdbcType="NVARCHAR" property="autoCheckCarjack" />
+    <result column="auto_check_warningtripod" jdbcType="NVARCHAR" property="autoCheckWarningtripod" />
+    <result column="auto_check_image" jdbcType="VARCHAR" property="autoCheckImage" />
+    <result column="auto_check_billid" jdbcType="BIGINT" property="autoCheckBillid" />
+    <result column="auto_check_sign" jdbcType="NVARCHAR" property="autoCheckSign" />
+    <result column="auto_check_oiltype" jdbcType="NVARCHAR" property="autoCheckOiltype" />
+    <result column="auto_check_yisuitie" jdbcType="NVARCHAR" property="autoCheckYisuitie" />
+    <result column="auto_check_usersign" jdbcType="NVARCHAR" property="autoCheckUsersign" />
+    <result column="auto_check_xcontact" jdbcType="NVARCHAR" property="autoCheckXcontact" />
+    <result column="auto_check_xphone" jdbcType="NVARCHAR" property="autoCheckXphone" />
+    <result column="auto_check_imanumber" jdbcType="INTEGER" property="autoCheckImanumber" />
+    <result column="auto_check_noupload" jdbcType="NVARCHAR" property="autoCheckNoupload" />
+    <result column="auto_check_luyintag" jdbcType="INTEGER" property="autoCheckLuyintag" />
+    <result column="auto_check_carcondition" jdbcType="NVARCHAR" property="autoCheckCarcondition" />
+    <result column="auto_check_serverphoto" jdbcType="NVARCHAR" property="autoCheckServerphoto" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_check_id, pub_editflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    auto_check_getcarmileage, auto_check_getcaroil, auto_check_sendcarmileage, auto_check_sendcaroil, 
+    auto_check_vehiclelicense, auto_check_insurancemark, auto_check_yearstandard, auto_check_environmentstandard, 
+    auto_check_carkey, auto_check_footpad, auto_check_trumpet, auto_check_dashboard, 
+    auto_check_wiper, auto_check_aircondition, auto_check_radio, auto_check_doorwindow, 
+    auto_check_trim, auto_check_safetybelt, auto_check_retroreflecot, auto_check_interiormirror, 
+    auto_check_turnlight, auto_check_headlamp, auto_check_taillight, auto_check_dashboardphoto, 
+    auto_check_carrecord, auto_check_outergps, auto_check_childseat, auto_check_carcharger, 
+    auto_check_edog, auto_check_phoneholder, auto_check_phonepower, auto_check_etc, auto_check_backburner, 
+    auto_check_kitbag, auto_check_carjack, auto_check_warningtripod, auto_check_image, 
+    auto_check_billid, auto_check_sign, auto_check_oiltype, auto_check_yisuitie, auto_check_usersign, 
+    auto_check_xcontact, auto_check_xphone, auto_check_imanumber, auto_check_noupload, 
+    auto_check_luyintag, auto_check_carcondition, auto_check_serverphoto
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_infor_check
+    where auto_check_id = #{autoCheckId,jdbcType=BIGINT}
+  </select>
+</mapper>

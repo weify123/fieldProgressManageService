@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoOther002Mapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoOther002Entity">
+    <id column="auto_ot02_id" jdbcType="BIGINT" property="autoOt02Id" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg" />
+    <result column="pub_compid" jdbcType="BIGINT" property="pubCompid" />
+    <result column="auto_ot02_c001" jdbcType="NVARCHAR" property="autoOt02C001" />
+    <result column="auto_ot02_c002" jdbcType="NVARCHAR" property="autoOt02C002" />
+    <result column="auto_ot02_c003" jdbcType="NVARCHAR" property="autoOt02C003" />
+    <result column="auto_ot02_c004" jdbcType="NVARCHAR" property="autoOt02C004" />
+    <result column="auto_ot02_c005" jdbcType="NVARCHAR" property="autoOt02C005" />
+    <result column="auto_ot02_c006" jdbcType="NVARCHAR" property="autoOt02C006" />
+    <result column="auto_ot02_c007" jdbcType="NVARCHAR" property="autoOt02C007" />
+    <result column="auto_ot02_c008" jdbcType="NVARCHAR" property="autoOt02C008" />
+    <result column="auto_ot02_c009" jdbcType="NVARCHAR" property="autoOt02C009" />
+    <result column="auto_ot02_type" jdbcType="NVARCHAR" property="autoOt02Type" />
+    <result column="auto_ot02_resttime" jdbcType="NVARCHAR" property="autoOt02Resttime" />
+    <result column="auto_ot02_city" jdbcType="NVARCHAR" property="autoOt02City" />
+    <result column="auto_ot02_waiqinid" jdbcType="NVARCHAR" property="autoOt02Waiqinid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_ot02_id, pub_editflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    pub_impflg, pub_compid, auto_ot02_c001, auto_ot02_c002, auto_ot02_c003, auto_ot02_c004, 
+    auto_ot02_c005, auto_ot02_c006, auto_ot02_c007, auto_ot02_c008, auto_ot02_c009, auto_ot02_type, 
+    auto_ot02_resttime, auto_ot02_city, auto_ot02_waiqinid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_other_002
+    where auto_ot02_id = #{autoOt02Id,jdbcType=BIGINT}
+  </select>
+
+</mapper>

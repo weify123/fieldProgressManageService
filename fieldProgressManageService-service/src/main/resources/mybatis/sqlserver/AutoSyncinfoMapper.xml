@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoSyncinfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoSyncinfoEntity">
+        <result column="auto_snyc_id" jdbcType="BIGINT" property="autoSnycId"/>
+        <result column="pub_editflag" jdbcType="BIGINT" property="pubEditflag"/>
+        <result column="pub_crttime" jdbcType="INTEGER" property="pubCrttime"/>
+        <result column="pub_crtusid" jdbcType="TIMESTAMP" property="pubCrtusid"/>
+        <result column="pub_fupdtime" jdbcType="BIGINT" property="pubFupdtime"/>
+        <result column="pub_fupdusid" jdbcType="TIMESTAMP" property="pubFupdusid"/>
+        <result column="pub_compid" jdbcType="BIGINT" property="pubCompid"/>
+        <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg"/>
+        <result column="auto_snyc_code" jdbcType="NVARCHAR" property="autoSnycCode"/>
+        <result column="auto_snyc_servertype" jdbcType="NVARCHAR" property="autoSnycServertype"/>
+        <result column="auto_snyc_dispatchtype" jdbcType="NVARCHAR" property="autoSnycDispatchtype"/>
+        <result column="auto_snyc_isdispatch" jdbcType="NVARCHAR" property="autoSnycIsdispatch"/>
+        <result column="auto_snyc_company" jdbcType="NVARCHAR" property="autoSnycCompany"/>
+        <result column="auto_snyc_conpanyid" jdbcType="NVARCHAR" property="autoSnycConpanyid"/>
+        <result column="auto_snyc_takeuserid" jdbcType="NVARCHAR" property="autoSnycTakeuserid"/>
+        <result column="auto_snyc_takeusername" jdbcType="NVARCHAR" property="autoSnycTakeusername"/>
+        <result column="auto_snyc_takeuserphone" jdbcType="NVARCHAR" property="autoSnycTakeuserphone"/>
+        <result column="auto_snyc_operatorno" jdbcType="NVARCHAR" property="autoSnycOperatorno"/>
+        <result column="auto_snyc_operatorname" jdbcType="NVARCHAR" property="autoSnycOperatorname"/>
+        <result column="auto_snyc_isowner" jdbcType="NVARCHAR" property="autoSnycIsowner"/>
+        <result column="auto_snyc_operatornote" jdbcType="NVARCHAR" property="autoSnycOperatornote"/>
+        <result column="auto_snyc_flightno" jdbcType="NVARCHAR" property="autoSnycFlightno"/>
+        <result column="auto_sync_editstatus" jdbcType="NVARCHAR" property="autoSyncEditstatus"/>
+        <result column="auto_sync_messageid" jdbcType="NVARCHAR" property="autoSyncMessageid"/>
+        <result column="auto_sync_dataid" jdbcType="BIGINT" property="autoSyncDataid"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      auto_snyc_id, pub_editflag, pub_crttime,
+      pub_crtusid, pub_fupdtime, pub_fupdusid,
+      pub_compid, pub_impflg, auto_snyc_code,
+      auto_snyc_servertype, auto_snyc_dispatchtype,
+      auto_snyc_isdispatch, auto_snyc_company,
+      auto_snyc_conpanyid, auto_snyc_takeuserid,
+      auto_snyc_takeusername, auto_snyc_takeuserphone,
+      auto_snyc_operatorno, auto_snyc_operatorname,
+      auto_snyc_isowner, auto_snyc_operatornote,
+      auto_snyc_flightno, auto_sync_editstatus,
+      auto_sync_messageid, auto_sync_dataid
+  </sql>
+
+    <select id="selectByMsgId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auto_syncinfo where
+        auto_sync_messageid = #{msgId}
+    </select>
+</mapper>

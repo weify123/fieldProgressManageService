@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.AppUserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.AppUserInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="contact_name" jdbcType="VARCHAR" property="contactName"/>
+        <result column="contact_mobile" jdbcType="VARCHAR" property="contactMobile"/>
+        <result column="id_no" jdbcType="VARCHAR" property="idNo"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
+        <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
+        <result column="employment" jdbcType="INTEGER" property="employment"/>
+        <result column="star" jdbcType="INTEGER" property="star"/>
+        <result column="station" jdbcType="VARCHAR" property="station"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="distributable" jdbcType="INTEGER" property="distributable"/>
+        <result column="id_card_uploaded" jdbcType="INTEGER" property="idCardUploaded"/>
+        <result column="driver_uploaded" jdbcType="INTEGER" property="driverUploaded"/>
+        <result column="avatar_uploaded" jdbcType="INTEGER" property="avatarUploaded"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      a.id, a.user_id, contact_name, contact_mobile,id_no,
+      address, longitude, latitude,
+      employment, star, station, email,
+      distributable, id_card_uploaded, driver_uploaded,
+      avatar_uploaded, a.is_delete, a.create_op,
+      a.create_time, a.update_op, a.update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user_info a
+        where a.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryAllMobileAndIdNo" resultMap="BaseResultMap">
+        select a.user_id, a.contact_mobile, a.id_no
+        from app_user_info a
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,u.user_name userName, u.mobile userMobile, u.employment_company_id companyId,
+        u.cur_status statusKey, u.city_id cityId,u.role
+        from app_user_info a left join app_user u on a.user_id = u.id
+        where a.is_delete = 0 and a.user_id = #{userId}
+    </select>
+
+    <sql id="pageCond">
+        <if test="userId != null">
+            AND a.user_id = #{userId}
+        </if>
+        <if test="userName != null">
+            AND u.user_name like concat('%',#{userName},'%')
+        </if>
+        <if test="userMobile != null">
+            AND u.mobile = #{userMobile}
+        </if>
+        <if test="companyId != null">
+            AND u.employment_company_id = #{companyId}
+        </if>
+        <if test="statusKey != null">
+            <choose>
+                <when test="statusKey == -1">
+                    AND u.cur_status != 2
+                </when>
+                <otherwise>
+                    AND u.cur_status = #{statusKey}
+                </otherwise>
+            </choose>
+        </if>
+        <if test="cityIdList != null">
+            AND u.city_id in
+            <foreach item="item" index="index" collection="cityIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="contactName != null">
+            AND a.contact_name like concat('%',#{contactName},'%')
+        </if>
+        <if test="contactMobile != null">
+            AND a.contact_mobile = #{contactMobile}
+        </if>
+        <if test="idNo != null">
+            AND a.id_no = #{idNo}
+        </if>
+        <if test="employment != null">
+            AND a.employment = #{employment}
+        </if>
+        <if test="distributable != null">
+            AND a.distributable = #{distributable}
+        </if>
+        <if test="idCardUploaded != null">
+            AND a.id_card_uploaded = #{idCardUploaded}
+        </if>
+        <if test="driverUploaded != null">
+            AND a.driver_uploaded = #{driverUploaded}
+        </if>
+        <if test="avatarUploaded != null">
+            AND a.avatar_uploaded = #{avatarUploaded}
+        </if>
+    </sql>
+
+    <select id="countObjByCond" parameterType="com.autoyol.field.progress.manage.entity.AppUserInfoEntity" resultType="java.lang.Integer">
+        select
+        count(a.id)
+        from app_user_info a left join app_user u on a.user_id = u.id
+        where a.is_delete = 0
+        <include refid="pageCond"/>
+    </select>
+
+    <select id="queryPageObjByCond" parameterType="com.autoyol.field.progress.manage.entity.AppUserInfoEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,u.user_name userName, u.mobile userMobile, u.employment_company_id companyId, u.cur_status statusKey, u.city_id cityId
+        ,u.role
+        from app_user_info a left join app_user u on a.user_id = u.id
+        where a.is_delete = 0
+        <include refid="pageCond"/>
+        order by a.create_time desc
+        limit #{start}, #{pageSize}
+    </select>
+
+    <select id="queryExistUserId" resultMap="BaseResultMap">
+        select a.id, a.user_id
+        from app_user_info a
+        where a.is_delete = 0 and a.user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateSelectById" parameterType="com.autoyol.field.progress.manage.entity.AppUserInfoEntity">
+        update app_user_info a
+        <set>
+            <if test="idNo != null">
+                a.id_no = #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="employment != null">
+                a.employment = #{employment,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                a.email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null and contactName != ''">
+                a.contact_name = #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactMobile != null and contactMobile != ''">
+                a.contact_mobile = #{contactMobile,jdbcType=INTEGER},
+            </if>
+            <if test="address != null and address != ''">
+                <choose>
+                    <when test="address == 'clear'">
+                        a.address = null,
+                        a.longitude = null,
+                        a.latitude = null,
+                    </when>
+                    <otherwise>
+                        a.address = #{address,jdbcType=VARCHAR},
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="longitude != null">
+                a.longitude = #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                a.latitude = #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="star != null">
+                a.star = #{star,jdbcType=INTEGER},
+            </if>
+            <if test="station != null and station != ''">
+                a.station = #{station,jdbcType=VARCHAR},
+            </if>
+            <if test="distributable != null">
+                a.distributable = #{distributable,jdbcType=INTEGER},
+            </if>
+            <if test="idCardUploaded != null">
+                a.id_card_uploaded = #{idCardUploaded},
+            </if>
+            <if test="driverUploaded != null">
+                a.driver_uploaded = #{driverUploaded},
+            </if>
+            <if test="avatarUploaded != null">
+                a.avatar_uploaded = #{avatarUploaded},
+            </if>
+            a.update_time = now(),
+            a.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where a.user_id = #{userId,jdbcType=INTEGER} and a.is_delete = 0
+    </update>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="info" index="index" open="" close="" separator=";">
+            update app_user_info a
+            <set>
+                a.id_no = #{info.idNo},
+                <if test="info.address != null and info.address != ''">
+                    a.address = #{info.address},
+                </if>
+                a.contact_name = #{info.contactName},
+                a.contact_mobile = #{info.contactMobile},
+                a.employment = #{info.employment},
+                a.star = #{info.star},
+                a.station = #{info.station},
+                a.distributable = #{info.distributable},
+                a.update_time = #{info.updateTime},
+                a.update_op = #{info.updateOp}
+            </set>
+            <where>
+                a.user_id =#{info.userId}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="batchInsert">
+        INSERT INTO app_user_info(user_id, id_no, address, contact_name, contact_mobile, employment, star, station,
+        distributable)
+        VALUES
+        <foreach collection="list" item="info" separator=",">
+            (#{info.userId},#{info.IdNo}, #{info.address}, #{info.contactName},#{info.contactMobile},
+            #{info.employment},#{info.star},#{info.station},#{info.distributable})
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.AppUserInfoEntity">
+        insert into app_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="contactName != null">
+                contact_name,
+            </if>
+            <if test="contactMobile != null">
+                contact_mobile,
+            </if>
+            <if test="idNo != null">
+                id_no,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="employment != null">
+                employment,
+            </if>
+            <if test="star != null">
+                star,
+            </if>
+            <if test="station != null">
+                station,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="distributable != null">
+                distributable,
+            </if>
+            <if test="idCardUploaded != null">
+                id_card_uploaded,
+            </if>
+            <if test="driverUploaded != null">
+                driver_uploaded,
+            </if>
+            <if test="avatarUploaded != null">
+                avatar_uploaded,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="contactName != null">
+                #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactMobile != null">
+                #{contactMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="idNo != null">
+                #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="employment != null">
+                #{employment,jdbcType=INTEGER},
+            </if>
+            <if test="star != null">
+                #{star,jdbcType=INTEGER},
+            </if>
+            <if test="station != null">
+                #{station,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="distributable != null">
+                #{distributable,jdbcType=INTEGER},
+            </if>
+            <if test="idCardUploaded != null">
+                #{idCardUploaded,jdbcType=INTEGER},
+            </if>
+            <if test="driverUploaded != null">
+                #{driverUploaded,jdbcType=INTEGER},
+            </if>
+            <if test="avatarUploaded != null">
+                #{avatarUploaded,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

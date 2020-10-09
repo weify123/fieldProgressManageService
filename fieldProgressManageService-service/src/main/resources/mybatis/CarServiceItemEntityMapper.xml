@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.CarServiceItemEntityMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.CarServiceItemEntity">
+        <!--@mbg.generated-->
+        <!--@Table car_service_item-->
+        <result column="service_id" jdbcType="INTEGER" property="serviceId"/>
+        <result column="service_type" jdbcType="INTEGER" property="serviceType"/>
+        <result column="service_product_name" jdbcType="VARCHAR" property="serviceProductName"/>
+        <result column="store_price" jdbcType="DECIMAL" property="storePrice"/>
+        <result column="aotu_price" jdbcType="DECIMAL" property="aotuPrice"/>
+        <result column="service_time" jdbcType="VARCHAR" property="serviceTime"/>
+        <result column="applicable_model" jdbcType="VARCHAR" property="applicableModel"/>
+        <result column="is_effective" jdbcType="INTEGER" property="isEffective"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        service_id, service_type, service_product_name, store_price, aotu_price, service_time,
+        applicable_model, is_effective, is_delete, create_op, create_time, update_op, update_time
+    </sql>
+
+    <select id="countByEntity" parameterType="com.autoyol.field.progress.manage.entity.CarServiceItemEntity" resultType="java.lang.Integer">
+        <!--@mbg.generated-->
+        select count(service_id)
+        from car_service_item
+        where 1=1
+        <if test="serviceProductName != null and serviceProductName != ''">
+            and service_product_name = #{serviceProductName,jdbcType=VARCHAR}
+        </if>
+        <if test="serviceId != null">
+            and service_id != #{serviceId,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from car_service_item
+        where service_id = #{serviceId,jdbcType=INTEGER}
+    </select>
+    <select id="queryCarServiceItems" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from car_service_item where 1=1
+        <if test="serviceId != null">
+            and service_id=#{serviceId,jdbcType=INTEGER}
+        </if>
+        <if test="serviceTypeKey != null">
+            and service_type=#{serviceTypeKey,jdbcType=INTEGER}
+        </if>
+        <if test="serviceProductName != null and serviceProductName != ''">
+            and service_product_name like concat('%',#{serviceProductName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="isEffectiveKey != null">
+            and is_effective=#{isEffectiveKey,jdbcType=INTEGER}
+        </if>
+    </select>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.autoyol.field.progress.manage.entity.CarServiceItemEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into car_service_item (service_id, service_type, service_product_name,
+        store_price, aotu_price, service_time, applicable_model, is_effective, create_op)
+        values (#{serviceId,jdbcType=INTEGER}, #{serviceType,jdbcType=INTEGER}, #{serviceProductName,jdbcType=VARCHAR},
+        #{storePrice,jdbcType=DECIMAL}, #{aotuPrice,jdbcType=DECIMAL}, #{serviceTime,jdbcType=VARCHAR},
+        #{applicableModel,jdbcType=VARCHAR}, #{isEffective,jdbcType=INTEGER}, #{createOp,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.autoyol.field.progress.manage.entity.CarServiceItemEntity">
+        update car_service_item
+        set
+        service_type = #{serviceType,jdbcType=INTEGER},
+        service_product_name = #{serviceProductName,jdbcType=VARCHAR},
+        store_price = #{storePrice,jdbcType=DECIMAL},
+        aotu_price = #{aotuPrice,jdbcType=DECIMAL},
+        service_time = #{serviceTime,jdbcType=VARCHAR},
+        applicable_model = #{applicableModel,jdbcType=VARCHAR},
+        is_effective = #{isEffective,jdbcType=BOOLEAN},
+        update_time = now(),
+        update_op = #{updateOp,jdbcType=VARCHAR}
+        where service_id = #{serviceId,jdbcType=INTEGER}
+    </update>
+</mapper>

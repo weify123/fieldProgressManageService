@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.AttendanceMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.AttendanceEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="zone_code" jdbcType="INTEGER" property="zoneCode"/>
+        <result column="zone_desc" jdbcType="VARCHAR" property="zoneDesc"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="mark" jdbcType="INTEGER" property="mark"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, user_id, zone_code, zone_desc, start_time,
+      end_time, status, mark, memo, is_delete,
+      create_op, create_time, update_op,
+      update_time
+    </sql>
+
+    <select id="selectTodayByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attendance a
+        where a.user_id = #{userId,jdbcType=INTEGER}
+        and date_format(a.start_time, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attendance a
+        where a.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attendance a
+        where a.user_id = #{userId,jdbcType=INTEGER} ORDER BY start_time asc
+    </select>
+
+    <update id="updateMemoById" parameterType="com.autoyol.field.progress.manage.entity.AttendanceEntity">
+        update attendance a
+        <set>
+            a.memo = #{memo,jdbcType=VARCHAR},
+            <if test="status != null and status != ''">
+                a.status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="mark != null">
+                a.mark = #{mark,jdbcType=INTEGER},
+            </if>
+            a.update_time = #{updateTime,jdbcType=TIMESTAMP},
+            a.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where a.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="at" index="index" open="" close="" separator=";">
+            update attendance a
+            <set>
+                a.`status` = #{at.status},
+                <if test="at.mark != null">
+                    a.mark = #{at.mark,jdbcType=INTEGER},
+                </if>
+                a.update_time = now(),
+                a.update_op = #{at.updateOp}
+            </set>
+            <where>
+                a.user_id =#{at.userId}
+                and a.zone_code =#{at.zoneCode}
+                and a.start_time = #{at.startTime}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="batchInsert">
+        INSERT INTO attendance(user_id, zone_code, zone_desc, start_time, end_time, status, mark, create_op)
+        VALUES
+        <foreach collection="list" item="a" separator=",">
+            (#{a.userId}, #{a.zoneCode}, #{a.zoneDesc}, #{a.startTime}, #{a.endTime},
+            #{a.status}, #{a.mark}, #{a.createOp})
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.AttendanceEntity">
+    insert into attendance (id, user_id, zone_code, zone_desc, start_time,
+      end_time, status, mark, memo, is_delete,
+      create_op, create_time, update_op, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{zoneCode,jdbcType=INTEGER}, #{zoneDesc,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{mark,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER},
+      #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateOp,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.AttendanceEntity">
+        insert into attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="zoneCode != null">
+                zone_code,
+            </if>
+            <if test="zoneDesc != null">
+                zone_desc,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="mark != null">
+                mark,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="zoneDesc != null">
+                #{zoneDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="zoneCode != null">
+                #{zoneCode,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="mark != null">
+                #{mark,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.CityLevelMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.CityLevelEntity">
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="full_letter" jdbcType="VARCHAR" property="fullLetter"/>
+        <result column="city_level" jdbcType="INTEGER" property="cityLevel"/>
+        <result column="rent" jdbcType="DECIMAL" property="rent"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        city_id, city, full_letter, city_level, rent,
+        is_delete, create_op, create_time,
+        update_op, update_time
+    </sql>
+
+    <select id="selectByCityIdList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from city_level
+        where city_id in
+        <foreach item="item" index="index" collection="cityIdList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from city_level
+        where city_id = #{cityId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from city_level
+    </select>
+
+    <select id="getCityIdByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select ct.city_id from city_level ct where ct.city = #{city,jdbcType=VARCHAR}
+    </select>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="city" index="index" close=";" separator=";">
+            update city_level ct
+            <set>
+                <if test="city.cityLevel != null">
+                    ct.city_level = #{city.cityLevel},
+                </if>
+                <if test="city.rent != null">
+                    ct.rent = #{city.rent},
+                </if>
+                ct.update_time = now(),
+                ct.update_op = #{city.updateOp}
+            </set>
+            <where>
+                ct.city_id =#{city.cityId}
+            </where>
+        </foreach>
+    </update>
+
+    <update id="updateCityById" parameterType="com.autoyol.field.progress.manage.entity.CityLevelEntity">
+        update city_level ct
+        <set>
+            <if test="city != null and city != ''">
+                ct.city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="fullLetter != null and fullLetter != ''">
+                ct.full_letter = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="cityLevel != null">
+                ct.city_level = #{cityLevel,jdbcType=INTEGER},
+            </if>
+            <if test="rent != null">
+                ct.rent = #{rent,jdbcType=DECIMAL},
+            </if>
+            ct.update_time = now(),
+            ct.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where ct.city_id = #{cityId,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.CityLevelEntity">
+    insert into city_level (city_id, city, full_letter, city_level, rent
+      is_delete, create_op, create_time, 
+      update_op, update_time)
+    values (#{cityId,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{cityLevel,jdbcType=INTEGER}, #{rent,jdbcType=DECIMAL},
+      #{isDelete,jdbcType=INTEGER}, #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateOp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.CityLevelEntity">
+        insert into city_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="fullLetter != null">
+                full_letter,
+            </if>
+            <if test="cityLevel != null">
+                city_level,
+            </if>
+            <if test="rent != null">
+                rent,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="fullLetter != null">
+                #{fullLetter,jdbcType=VARCHAR},
+            </if>
+            <if test="cityLevel != null">
+                #{cityLevel,jdbcType=INTEGER},
+            </if>
+            <if test="rent != null">
+                #{rent,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

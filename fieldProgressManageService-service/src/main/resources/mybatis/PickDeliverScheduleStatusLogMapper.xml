@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.PickDeliverScheduleStatusLogMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.PickDeliverScheduleStatusLogEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="pick_deliver_order_no" jdbcType="VARCHAR" property="pickDeliverOrderNo"/>
+        <result column="service_type" jdbcType="INTEGER" property="serviceType"/>
+        <result column="schedule_status" jdbcType="INTEGER" property="scheduleStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithReason"
+               type="com.autoyol.field.progress.manage.entity.PickDeliverScheduleStatusLogEntity">
+        <result column="reason" jdbcType="LONGVARCHAR" property="reason"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, pick_deliver_order_no, service_type, schedule_status,
+    is_delete, create_op, create_time,
+    update_op, update_time, reason
+   </sql>
+
+    <sql id="Blob_Column_List">
+    reason
+  </sql>
+
+    <select id="queryObjListByOrderId" parameterType="java.lang.String" resultMap="ResultMapWithReason">
+        select
+        <include refid="Base_Column_List"/>
+        from pick_deliver_schedule_status_log t
+        where t.pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="batchInsert">
+        INSERT INTO pick_deliver_schedule_status_log(pick_deliver_order_no, service_type, schedule_status, create_op)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.pickDeliverOrderNo}, #{item.serviceType}, #{item.scheduleStatus}, #{item.createOp})
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective"
+            parameterType="com.autoyol.field.progress.manage.entity.PickDeliverScheduleStatusLogEntity">
+        insert into pick_deliver_schedule_status_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pickDeliverOrderNo != null">
+                pick_deliver_order_no,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="scheduleStatus != null">
+                schedule_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pickDeliverOrderNo != null">
+                #{pickDeliverOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="scheduleStatus != null">
+                #{scheduleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

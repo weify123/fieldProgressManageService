@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.ImportLogMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.ImportLogEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="business_type" jdbcType="INTEGER" property="businessType"/>
+        <result column="match_record_succ" jdbcType="VARCHAR" property="matchRecordSucc"/>
+        <result column="match_record_fail" jdbcType="VARCHAR" property="matchRecordFail"/>
+        <result column="import_record_succ" jdbcType="VARCHAR" property="importRecordSucc"/>
+        <result column="import_record_fail" jdbcType="VARCHAR" property="importRecordFail"/>
+        <result column="is_delete" jdbcType="CHAR" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <select id="countByType" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        select count(id)
+        from import_log
+        where is_delete = 0
+        <choose>
+            <when test="businessType == 4 or businessType == 5">
+                and business_type in (4, 5)
+            </when>
+            <otherwise>
+                and business_type = #{businessType,jdbcType=INTEGER}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryPageLogByType" parameterType="com.autoyol.field.progress.manage.entity.ImportLogReqEntity"
+            resultMap="BaseResultMap">
+    SELECT imlog.id, imlog.business_type, imlog.match_record_succ, imlog.match_record_fail,
+    imlog.import_record_succ, imlog.import_record_fail,
+    imlog.create_op, imlog.create_time
+    FROM import_log imlog
+    WHERE is_delete = 0
+        <choose>
+            <when test="businessType == 4 or businessType == 5">
+                and imlog.business_type in (4, 5)
+            </when>
+            <otherwise>
+                and imlog.business_type = #{businessType,jdbcType=INTEGER}
+            </otherwise>
+        </choose>
+    order by create_time desc LIMIT #{start},#{pageSize}
+  </select>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.ImportLogEntity">
+    insert into import_log (id, business_type, match_record_succ, 
+      match_record_fail, import_record_succ, import_record_fail, 
+      is_delete, create_op, create_time, 
+      update_op, update_time)
+    values (#{id,jdbcType=INTEGER}, #{businessType,jdbcType=INTEGER}, #{matchRecordSucc,jdbcType=VARCHAR}, 
+      #{matchRecordFail,jdbcType=VARCHAR}, #{importRecordSucc,jdbcType=VARCHAR}, #{importRecordFail,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateOp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.ImportLogEntity">
+        insert into import_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="matchRecordSucc != null">
+                match_record_succ,
+            </if>
+            <if test="matchRecordFail != null">
+                match_record_fail,
+            </if>
+            <if test="importRecordSucc != null">
+                import_record_succ,
+            </if>
+            <if test="importRecordFail != null">
+                import_record_fail,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="businessType != null">
+                #{businessType,jdbcType=INTEGER},
+            </if>
+            <if test="matchRecordSucc != null">
+                #{matchRecordSucc,jdbcType=VARCHAR},
+            </if>
+            <if test="matchRecordFail != null">
+                #{matchRecordFail,jdbcType=VARCHAR},
+            </if>
+            <if test="importRecordSucc != null">
+                #{importRecordSucc,jdbcType=VARCHAR},
+            </if>
+            <if test="importRecordFail != null">
+                #{importRecordFail,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoDictDataMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoDictDataEntity">
+        <id column="auto_inf05_id" jdbcType="BIGINT" property="autoInf05Id"/>
+        <result column="sysp_ddt_id" jdbcType="BIGINT" property="id"/>
+        <result column="sysp_ddt_code" jdbcType="NVARCHAR" property="code"/>
+        <result column="sysp_ddt_name" jdbcType="NVARCHAR" property="name"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sysp_ddt_id, sysp_ddt_code, sysp_ddt_name
+  </sql>
+
+    <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoDictDataEntity"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        sysp_dicttype, sysp_dictdata
+        WHERE
+        sysp_dicttype.sysp_dtp_id = sysp_dictdata.sysp_ddt_dtpid
+        AND sysp_dicttype.sysp_dtp_code = #{dtpCode,jdbcType=VARCHAR}
+        <if test="nameList != null ">
+            AND sysp_dictdata.sysp_ddt_name in
+            <foreach item="item" index="index" collection="nameList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="name != null ">
+            AND sysp_dictdata.sysp_ddt_name = #{name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectDictByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoDictDataEntity"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        sysp_dicttype, sysp_dictdata
+        WHERE
+        sysp_dicttype.sysp_dtp_id = sysp_dictdata.sysp_ddt_dtpid
+        AND sysp_dicttype.sysp_dtp_code = #{dtpCode,jdbcType=VARCHAR}
+        AND sysp_dictdata.sysp_ddt_code = #{ddtCode,jdbcType=VARCHAR}
+    </select>
+</mapper>

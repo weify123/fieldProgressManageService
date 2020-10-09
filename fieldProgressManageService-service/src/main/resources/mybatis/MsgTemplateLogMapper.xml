@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.MsgTemplateLogMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.MsgTemplateLogEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="msg_name" jdbcType="VARCHAR" property="msgName"/>
+        <result column="belong_sys" jdbcType="INTEGER" property="belongSys"/>
+        <result column="msg_type" jdbcType="VARCHAR" property="msgType"/>
+        <result column="msg_subject" jdbcType="VARCHAR" property="msgSubject"/>
+        <result column="send_name" jdbcType="VARCHAR" property="sendName"/>
+        <result column="send_num" jdbcType="VARCHAR" property="sendNum"/>
+        <result column="receiver_id" jdbcType="VARCHAR" property="receiverId"/>
+        <result column="receiver_num" jdbcType="VARCHAR" property="receiverNum"/>
+        <result column="send_status" jdbcType="INTEGER" property="sendStatus"/>
+        <result column="try_count" jdbcType="INTEGER" property="tryCount"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithContent"
+               type="com.autoyol.field.progress.manage.entity.MsgTemplateLogEntity">
+        <result column="msg_content" jdbcType="LONGVARCHAR" property="msgContent"/>
+    </resultMap>
+    <sql id="Blob_Column_List">
+    msg_content
+    </sql>
+
+    <sql id="Base_Column_List">
+      id, msg_name, belong_sys, msg_type, msg_subject, send_name,
+      send_num, receiver_id, receiver_num, send_status, try_count, is_delete, create_op,
+      create_time, update_op, update_time, msg_content
+   </sql>
+
+    <select id="selectMailSending" resultMap="ResultMapWithContent">
+        select
+        <include refid="Base_Column_List"/>
+        from msg_template_log t where t.send_status = 0
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.MsgTemplateLogEntity">
+        update msg_template_log t
+        <set>
+            <if test="tryCount != null">
+                t.try_count = #{tryCount,jdbcType=INTEGER},
+            </if>
+            t.send_status = #{sendStatus,jdbcType=INTEGER},
+            t.update_op = #{updateOp,jdbcType=VARCHAR},
+            t.update_time = now()
+        </set>
+        where t.id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.MsgTemplateLogEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into msg_template_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="msgName != null">
+                msg_name,
+            </if>
+            <if test="belongSys != null">
+                belong_sys,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="msgSubject != null">
+                msg_subject,
+            </if>
+            <if test="sendName != null">
+                send_name,
+            </if>
+            <if test="sendNum != null">
+                send_num,
+            </if>
+            <if test="receiverId != null">
+                receiver_id,
+            </if>
+            <if test="receiverNum != null">
+                receiver_num,
+            </if>
+            <if test="sendStatus != null">
+                send_status,
+            </if>
+            <if test="tryCount != null">
+                try_count,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="msgContent != null">
+                msg_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="msgName != null">
+                #{msgName,jdbcType=VARCHAR},
+            </if>
+            <if test="belongSys != null">
+                #{belongSys,jdbcType=INTEGER},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=VARCHAR},
+            </if>
+            <if test="msgSubject != null">
+                #{msgSubject,jdbcType=VARCHAR},
+            </if>
+            <if test="sendName != null">
+                #{sendName,jdbcType=VARCHAR},
+            </if>
+            <if test="sendNum != null">
+                #{sendNum,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverId != null">
+                #{receiverId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverNum != null">
+                #{receiverNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sendStatus != null">
+                #{sendStatus,jdbcType=INTEGER},
+            </if>
+            <if test="tryCount != null">
+                #{tryCount,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="msgContent != null">
+                #{msgContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

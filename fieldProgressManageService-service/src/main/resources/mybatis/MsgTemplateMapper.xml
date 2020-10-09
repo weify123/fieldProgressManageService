@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.MsgTemplateMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.MsgTemplateEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="msg_name" jdbcType="VARCHAR" property="msgName"/>
+        <result column="belong_sys" jdbcType="INTEGER" property="belongSys"/>
+        <result column="msg_type" jdbcType="VARCHAR" property="msgType"/>
+        <result column="msg_subject" jdbcType="VARCHAR" property="msgSubject" />
+        <result column="msg_status" jdbcType="INTEGER" property="msgStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <resultMap extends="BaseResultMap" id="ResultMapWithContent"
+               type="com.autoyol.field.progress.manage.entity.MsgTemplateEntity">
+        <result column="msg_content" jdbcType="LONGVARCHAR" property="msgContent"/>
+    </resultMap>
+
+    <sql id="Blob_Column_List">
+        msg_content
+    </sql>
+
+    <sql id="Base_Column_List">
+    id, msg_name, belong_sys, msg_type, msg_subject, msg_status, msg_content,
+    is_delete, create_op, create_time, update_op, update_time
+    </sql>
+
+    <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.MsgTemplateEntity"
+            resultMap="ResultMapWithContent">
+        select
+        <include refid="Base_Column_List"/>
+        from msg_template t
+        where t.is_delete = 0 and t.belong_sys = #{belongSys,jdbcType=INTEGER}
+        and t.msg_name = #{msgName,jdbcType=VARCHAR}
+        and t.msg_status = 0
+    </select>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.MsgTemplateEntity">
+        insert into msg_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="msgName != null">
+                msg_name,
+            </if>
+            <if test="belongSys != null">
+                belong_sys,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="msgSubject != null">
+                msg_subject,
+            </if>
+            <if test="msgStatus != null">
+                msg_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="msgContent != null">
+                msg_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="msgName != null">
+                #{msgName,jdbcType=VARCHAR},
+            </if>
+            <if test="belongSys != null">
+                #{belongSys,jdbcType=INTEGER},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=VARCHAR},
+            </if>
+            <if test="msgSubject != null">
+                #{msgSubject,jdbcType=VARCHAR},
+            </if>
+            <if test="msgStatus != null">
+                #{msgStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="msgContent != null">
+                #{msgContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.AppUserMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.AppUserEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="pass_word" jdbcType="CHAR" property="passWord"/>
+        <result column="employment_company_id" jdbcType="INTEGER" property="employmentCompanyId"/>
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="cur_status" jdbcType="CHAR" property="curStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, user_name, mobile,pass_word,employment_company_id,city_id,role,
+        cur_status,is_delete,create_op,create_time,update_op,update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user u
+        where u.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectNotDisabledByCond" parameterType="com.autoyol.field.progress.manage.entity.AppUserEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user where is_delete = 0
+        and cur_status <![CDATA[ < ]]> 2
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+    </select>
+
+    <select id="countByCond" parameterType="com.autoyol.field.progress.manage.entity.AppUserEntity"
+            resultType="java.lang.Integer">
+        select
+        count(id)
+        from app_user where is_delete = 0
+        and cur_status <![CDATA[ < ]]> 2
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+        <if test="userName != null">
+            AND user_name = #{userName}
+        </if>
+        <if test="mobile != null">
+            AND mobile = #{mobile}
+        </if>
+    </select>
+
+    <select id="batchCountQuery" resultType="java.lang.Integer">
+        select
+        count(u.id)
+        from app_user u where u.is_delete = 0
+        and u.cur_status != 2
+    </select>
+
+    <select id="batchQueryByCond" parameterType="com.autoyol.field.progress.manage.page.BasePage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user u where u.is_delete = 0
+        and u.cur_status != 2
+        limit #{start}, #{pageSize}
+    </select>
+
+    <select id="queryAppUserByCond" parameterType="com.autoyol.field.progress.manage.entity.AppUserEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user u where u.is_delete = 0
+        <if test="userName != null">
+            AND u.user_name like concat('%',#{userName},'%')
+        </if>
+        <if test="mobile != null">
+            AND u.mobile = #{mobile}
+        </if>
+        <if test="employmentCompanyId != null">
+            AND u.employment_company_id = #{employmentCompanyId}
+        </if>
+        <if test="curStatus != null">
+            <choose>
+                <when test="curStatus == -1">
+                    AND u.cur_status != 2
+                </when>
+                <otherwise>
+                    AND u.cur_status = #{curStatus}
+                </otherwise>
+            </choose>
+        </if>
+        <if test="id != null">
+            AND u.id = #{id}
+        </if>
+        <if test="cityId != null">
+            AND u.city_id = #{cityId}
+        </if>
+        <if test="cityIdList != null">
+            AND u.city_id in
+            <foreach item="item" index="index" collection="cityIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <sql id="pageCond">
+        <if test="userId != null">
+            AND u.id = #{userId}
+        </if>
+        <if test="userName != null">
+            AND u.user_name like concat('%',#{userName},'%')
+        </if>
+        <if test="userMobile != null">
+            AND u.mobile = #{userMobile}
+        </if>
+        <if test="companyId != null">
+            AND u.employment_company_id = #{companyId}
+        </if>
+        <if test="statusKey != null">
+            <choose>
+                <when test="statusKey == -1">
+                    AND u.cur_status != 2
+                </when>
+                <otherwise>
+                    AND u.cur_status = #{statusKey}
+                </otherwise>
+            </choose>
+        </if>
+        <if test="cityIdList != null">
+            AND u.city_id in
+            <foreach item="item" index="index" collection="cityIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="countAppUserPageByCond" parameterType="com.autoyol.field.progress.manage.request.user.AppUserQueryReqVo"
+            resultType="java.lang.Integer">
+        select
+        count(id)
+        from app_user u where u.is_delete = 0
+        <include refid="pageCond"/>
+    </select>
+
+    <select id="queryAppUserPageByCond" parameterType="com.autoyol.field.progress.manage.request.user.AppUserQueryReqVo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from app_user u where u.is_delete = 0
+        <include refid="pageCond"/>
+        order by u.create_time desc
+        limit #{start}, #{pageSize}
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.AppUserEntity">
+        update app_user u
+        <set>
+            <if test="userId != null">
+                u.user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null and userName != ''">
+                u.user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                u.mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null and passWord != ''">
+                u.pass_word = #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="employmentCompanyId != null">
+                u.employment_company_id = #{employmentCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                u.city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="curStatus != null and curStatus != ''">
+                u.cur_status = #{curStatus,jdbcType=CHAR},
+            </if>
+            u.update_time = now(),
+            u.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where u.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.AppUserEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into app_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="passWord != null">
+                pass_word,
+            </if>
+            <if test="employmentCompanyId != null">
+                employment_company_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="curStatus != null">
+                cur_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null">
+                #{passWord,jdbcType=CHAR},
+            </if>
+            <if test="employmentCompanyId != null">
+                #{employmentCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="curStatus != null">
+                #{curStatus,jdbcType=CHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

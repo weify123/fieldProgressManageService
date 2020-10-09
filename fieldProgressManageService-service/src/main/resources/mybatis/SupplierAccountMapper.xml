@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.SupplierAccountMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.SupplierAccountEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="mannage_city" jdbcType="VARCHAR" property="mannageCity"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, user_name, company_id, email, mannage_city, is_enable,
+    is_delete, create_op, create_time, update_op, update_time
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from supplier_account s
+        where s.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getUserIdByUserName" parameterType="java.lang.String" resultType="java.lang.String">
+        select s.user_id from supplier_account s where s.user_name = #{userName,jdbcType=VARCHAR} and s.is_delete = 0
+    </select>
+
+    <select id="selectSupplierByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from supplier_account s
+        where s.user_name = #{userName,jdbcType=VARCHAR} and s.is_delete = 0
+    </select>
+
+    <select id="selectSupplierByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from supplier_account s
+        where s.user_id = #{userId,jdbcType=VARCHAR} and s.is_delete = 0
+    </select>
+
+    <select id="queryCond" parameterType="com.autoyol.field.progress.manage.entity.SupplierAccountEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from supplier_account s
+        where s.is_delete = 0
+        <if test="companyId != null">
+            AND s.company_id = #{companyId}
+        </if>
+        <if test="isEnable != null">
+            AND s.is_enable = #{isEnable}
+        </if>
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.SupplierAccountEntity">
+        update supplier_account s
+        <set>
+            <if test="companyId != null">
+                s.company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                s.user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                s.email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mannageCity != null and mannageCity != ''">
+                s.mannage_city = #{mannageCity,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null">
+                s.is_enable = #{isEnable,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                s.is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            s.update_time = now(),
+            s.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where s.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByUserId" parameterType="com.autoyol.field.progress.manage.entity.SupplierAccountEntity">
+        update supplier_account s
+        <set>
+            <if test="companyId != null">
+                s.company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                s.user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                s.email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mannageCity != null and mannageCity != ''">
+                s.mannage_city = #{mannageCity,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null">
+                s.is_enable = #{isEnable,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                s.is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            s.update_time = now(),
+            s.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where s.user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="supplier" index="index" close=";" separator=";">
+            update supplier_account s
+            <set>
+                <if test="supplier.companyId != null">
+                    s.company_id = #{supplier.companyId},
+                </if>
+                <if test="supplier.email != null and supplier.email != ''">
+                    s.email = #{supplier.email},
+                </if>
+                <if test="supplier.mannageCity != null and supplier.mannageCity != ''">
+                    s.mannage_city = #{supplier.mannageCity},
+                </if>
+                <if test="supplier.isEnable != null">
+                    s.is_enable = #{supplier.isEnable},
+                </if>
+                s.update_time = now(),
+                s.update_op = #{supplier.updateOp}
+            </set>
+            <where>
+                s.user_id = #{supplier.userId}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.SupplierAccountEntity">
+    insert into supplier_account (id, user_id, user_name, company_id,
+      email, mannage_city, is_enable, 
+      is_delete, create_op, create_time, 
+      update_op, update_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER},
+      #{email,jdbcType=VARCHAR}, #{mannageCity,jdbcType=VARCHAR}, #{isEnable,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=INTEGER}, #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateOp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.SupplierAccountEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into supplier_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="mannageCity != null">
+                mannage_city,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mannageCity != null">
+                #{mannageCity,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

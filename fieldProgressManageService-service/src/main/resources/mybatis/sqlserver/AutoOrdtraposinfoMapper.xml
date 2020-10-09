@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoOrdtraposinfoMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoOrdtraposinfoEntity">
+    <id column="auto_otp_id" jdbcType="BIGINT" property="autoOtpId" />
+    <result column="auto_otp_fldtid" jdbcType="BIGINT" property="autoOtpFldtid" />
+    <result column="auto_otp_lon" jdbcType="NVARCHAR" property="autoOtpLon" />
+    <result column="auto_otp_lat" jdbcType="NVARCHAR" property="autoOtpLat" />
+    <result column="auto_otp_appstep" jdbcType="NVARCHAR" property="autoOtpAppstep" />
+    <result column="auto_otp_apptime" jdbcType="TIMESTAMP" property="autoOtpApptime" />
+    <result column="auto_otp_addr" jdbcType="NVARCHAR" property="autoOtpAddr" />
+    <result column="auto_otp_distancepoor" jdbcType="NVARCHAR" property="autoOtpDistancepoor" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_otp_id, auto_otp_fldtid, auto_otp_lon, auto_otp_lat, auto_otp_appstep, auto_otp_apptime, 
+    auto_otp_addr, auto_otp_distancepoor, pub_editflag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_ordtraposinfo
+    where auto_otp_id = #{autoOtpId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectCurByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoOrdtraposinfoEntity" resultType="java.lang.String">
+    select
+    max(distinct auto_otp_appstep)
+    from auto_ordtraposinfo
+    where auto_otp_fldtid = #{autoOtpFldtid,jdbcType=BIGINT}
+  </select>
+
+</mapper>

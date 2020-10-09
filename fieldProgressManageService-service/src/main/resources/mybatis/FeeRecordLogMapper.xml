@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.FeeRecordLogMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.FeeRecordLogEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="pick_deliver_fee_id" jdbcType="INTEGER" property="pickDeliverFeeId"/>
+        <result column="fee_label_id" jdbcType="INTEGER" property="feeLabelId"/>
+        <result column="expense_type" jdbcType="VARCHAR" property="expenseType"/>
+        <result column="fee_type" jdbcType="INTEGER" property="feeType"/>
+        <result column="attr_code" jdbcType="VARCHAR" property="attrCode"/>
+        <result column="fee_value" jdbcType="DECIMAL" property="feeValue"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, pick_deliver_fee_id, fee_label_id,
+      expense_type, fee_type, attr_code, fee_value,
+      is_delete, create_op, create_time,
+      update_op, update_time
+    </sql>
+
+    <select id="selectByPickDeliverId"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fee_record_log t
+        where t.pick_deliver_fee_id = #{pickDeliverFeeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByPickDeliverIdAndFeeLabelId"
+            parameterType="com.autoyol.field.progress.manage.entity.FeeRecordLogEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fee_record_log t
+        where t.pick_deliver_fee_id = #{pickDeliverFeeId,jdbcType=INTEGER} and t.fee_label_id =
+        #{feeLabelId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="batchInsert">
+        INSERT INTO fee_record_log(pick_deliver_fee_id, fee_label_id, expense_type, attr_code)
+        VALUES
+        <foreach collection="list" item="f" separator=",">
+            (#{f.pickDeliverFeeId}, #{f.feeLabelId}, #{f.expenseType}, #{f.attrCode})
+        </foreach>
+    </insert>
+
+    <insert id="batchInsertLog">
+        INSERT INTO fee_record_log(pick_deliver_fee_id, fee_label_id, expense_type, fee_type, attr_code, fee_value,
+        create_op,
+        create_time,
+        update_op, update_time)
+        VALUES
+        <foreach collection="list" item="f" separator=",">
+            (#{f.pickDeliverFeeId}, #{f.feeLabelId}, #{f.expenseType}, #{f.feeType}, #{f.attrCode}, #{f.feeValue},
+            #{f.createOp},
+            #{f.createTime}, #{f.updateOp}, #{f.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.FeeRecordLogEntity">
+    insert into fee_record_log (id, pick_deliver_fee_id, fee_label_id, 
+      expense_type, fee_type, attr_code, fee_value,
+      is_delete, create_op, create_time, 
+      update_op, update_time)
+    values (#{id,jdbcType=INTEGER}, #{pickDeliverFeeId,jdbcType=INTEGER}, #{feeLabelId,jdbcType=INTEGER}, 
+      #{expenseType,jdbcType=VARCHAR}, #{feeType,jdbcType=INTEGER}, #{attrCode,jdbcType=VARCHAR}, #{feeValue,jdbcType=DECIMAL},
+      #{isDelete,jdbcType=INTEGER}, #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateOp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.FeeRecordLogEntity">
+        insert into fee_record_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pickDeliverFeeId != null">
+                pick_deliver_fee_id,
+            </if>
+            <if test="feeLabelId != null">
+                fee_label_id,
+            </if>
+            <if test="expenseType != null">
+                expense_type,
+            </if>
+            <if test="feeType != null">
+                fee_type,
+            </if>
+            <if test="attrCode != null">
+                attr_code,
+            </if>
+            <if test="feeValue != null">
+                fee_value,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pickDeliverFeeId != null">
+                #{pickDeliverFeeId,jdbcType=INTEGER},
+            </if>
+            <if test="feeLabelId != null">
+                #{feeLabelId,jdbcType=INTEGER},
+            </if>
+            <if test="expenseType != null">
+                #{expenseType,jdbcType=VARCHAR},
+            </if>
+            <if test="feeType != null">
+                #{feeType,jdbcType=INTEGER},
+            </if>
+            <if test="attrCode != null">
+                #{attrCode,jdbcType=VARCHAR},
+            </if>
+            <if test="feeValue != null">
+                #{feeValue,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

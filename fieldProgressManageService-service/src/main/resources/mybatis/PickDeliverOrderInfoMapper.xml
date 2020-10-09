@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.PickDeliverOrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.PickDeliverOrderInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="pick_deliver_order_no" jdbcType="VARCHAR" property="pickDeliverOrderNo"/>
+        <result column="service_type" jdbcType="INTEGER" property="serviceType"/>
+        <result column="is_supply" jdbcType="INTEGER" property="isSupply"/>
+        <result column="opr_type" jdbcType="INTEGER" property="oprType"/>
+        <result column="schedule_status" jdbcType="INTEGER" property="scheduleStatus"/>
+        <result column="field_app_status" jdbcType="INTEGER" property="fieldAppStatus"/>
+        <result column="is_direct_compensate" jdbcType="INTEGER" property="isDirectCompensate"/>
+        <result column="channel_key" jdbcType="INTEGER" property="channelKey"/>
+        <result column="service_class" jdbcType="INTEGER" property="serviceClass"/>
+        <result column="is_free" jdbcType="INTEGER" property="isFree"/>
+        <result column="service_fee" jdbcType="DECIMAL" property="serviceFee"/>
+        <result column="report_no" jdbcType="VARCHAR" property="reportNo"/>
+        <result column="gold_key" jdbcType="VARCHAR" property="goldKey"/>
+        <result column="order_channel_source" jdbcType="INTEGER" property="orderChannelSource"/>
+        <result column="estimate_service_time" jdbcType="VARCHAR" property="estimateServiceTime"/>
+        <result column="pick_time" jdbcType="TIMESTAMP" property="pickTime"/>
+        <result column="pick_addr" jdbcType="VARCHAR" property="pickAddr"/>
+        <result column="pick_long" jdbcType="DECIMAL" property="pickLong"/>
+        <result column="pick_lat" jdbcType="DECIMAL" property="pickLat"/>
+        <result column="deliver_time" jdbcType="TIMESTAMP" property="deliverTime"/>
+        <result column="deliver_addr" jdbcType="VARCHAR" property="deliverAddr"/>
+        <result column="deliver_long" jdbcType="DECIMAL" property="deliverLong"/>
+        <result column="deliver_lat" jdbcType="DECIMAL" property="deliverLat"/>
+        <result column="take_note" jdbcType="LONGVARCHAR" property="takeNote"/>
+        <result column="repair_shop_contact" jdbcType="VARCHAR" property="repairShopContact"/>
+        <result column="repair_shop_phone" jdbcType="VARCHAR" property="repairShopPhone"/>
+        <result column="store_name" jdbcType="VARCHAR" property="storeName"/>
+        <result column="store_phone" jdbcType="VARCHAR" property="storePhone"/>
+        <result column="is_upload_record" jdbcType="VARCHAR" property="isUploadRecord"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="queryMap" extends="BaseResultMap" type="com.autoyol.field.progress.manage.entity.PageCondTackBackEntity">
+        <result column="belong_city" jdbcType="VARCHAR" property="belongCity"/>
+        <result column="offline_order_type" jdbcType="INTEGER" property="offlineOrderType"/>
+        <result column="partner" jdbcType="VARCHAR" property="partner"/>
+        <result column="vehicle_type" jdbcType="INTEGER" property="vehicleType"/>
+        <result column="vehicle_model" jdbcType="VARCHAR" property="vehicleModel"/>
+        <result column="vehicle_no" jdbcType="VARCHAR" property="vehicleNo"/>
+        <result column="supplier_company_id" jdbcType="INTEGER" property="supplierCompanyId" />
+        <result column="supplier_company_name" jdbcType="VARCHAR" property="supplierCompanyName" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="is_own_person" jdbcType="INTEGER" property="isOwnPerson" />
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName"/>
+        <result column="renter_name" jdbcType="VARCHAR" property="renterName"/>
+        <result column="mem_flag" jdbcType="VARCHAR" property="memFlag"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    A.id, A.order_no, A.pick_deliver_order_no, A.service_type, A.is_supply, A.opr_type,
+    A.schedule_status, A.field_app_status, A.is_direct_compensate, A.channel_key, A.service_class,
+    A.is_free, A.service_fee, A.report_no, A.gold_key, A.order_channel_source, A.estimate_service_time,
+    A.pick_time, A.pick_addr, A.pick_long, A.pick_lat, A.deliver_time, A.deliver_addr, A.deliver_long, A.deliver_lat, A.take_note,
+    A.repair_shop_contact, A.repair_shop_phone, A.store_name, A.store_phone,A.is_upload_record,
+    A.is_delete, A.create_op, A.create_time, A.update_op, A.update_time
+    </sql>
+
+    <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverOrderInfoEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pick_deliver_order_info A
+        where A.is_delete = 0
+        <if test="pickTime != null">
+            and date_format(A.pick_time, '%Y') = date_format(#{pickTime}, '%Y')
+        </if>
+        <if test="pickDeliverOrderNo != null">
+            and A.pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="serviceType != null">
+            and A.service_type = #{serviceType,jdbcType=INTEGER}
+        </if>
+        <if test="orderNo != null">
+            and A.order_no = #{orderNo,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <update id="updateByCond" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverOrderInfoEntity">
+        update pick_deliver_order_info set
+        <if test="isSupply != null ">
+            is_supply = #{isSupply,jdbcType=INTEGER},
+        </if>
+        <if test="oprType != null ">
+            opr_type = #{oprType,jdbcType=INTEGER},
+        </if>
+        <if test="scheduleStatus != null ">
+            schedule_status = #{scheduleStatus,jdbcType=INTEGER},
+        </if>
+        <if test="fieldAppStatus != null ">
+            field_app_status = #{fieldAppStatus,jdbcType=INTEGER},
+        </if>
+        <if test="isDirectCompensate != null ">
+            is_direct_compensate = #{isDirectCompensate,jdbcType=INTEGER},
+        </if>
+        <if test="channelKey != null ">
+            channel_key = #{channelKey,jdbcType=INTEGER},
+        </if>
+        <if test="serviceClass != null ">
+            service_class = #{serviceClass,jdbcType=VARCHAR},
+        </if>
+        <if test="isFree != null ">
+            is_free = #{isFree,jdbcType=INTEGER},
+        </if>
+        <if test="serviceFee != null ">
+            service_fee = #{serviceFee,jdbcType=DECIMAL},
+        </if>
+        <if test="reportNo != null ">
+            report_no = #{reportNo,jdbcType=VARCHAR},
+        </if>
+        <if test="goldKey != null ">
+            gold_key = #{goldKey,jdbcType=VARCHAR},
+        </if>
+        <if test="orderChannelSource != null ">
+            order_channel_source = #{orderChannelSource,jdbcType=INTEGER},
+        </if>
+        <if test="estimateServiceTime != null ">
+            estimate_service_time = #{estimateServiceTime,jdbcType=VARCHAR},
+        </if>
+        <if test="pickTime != null ">
+            pick_time = #{pickTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="pickAddr != null ">
+            pick_addr = #{pickAddr,jdbcType=VARCHAR},
+        </if>
+        <if test="pickLong != null ">
+            pick_long = #{pickLong,jdbcType=DECIMAL},
+        </if>
+        <if test="pickLat != null ">
+            pick_lat = #{pickLat,jdbcType=DECIMAL},
+        </if>
+        <if test="deliverTime != null ">
+            deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deliverAddr != null ">
+            deliver_addr = #{deliverAddr,jdbcType=VARCHAR},
+        </if>
+        <if test="deliverLong != null ">
+            deliver_long = #{deliverLong,jdbcType=DECIMAL},
+        </if>
+        <if test="deliverLat != null ">
+            deliver_lat = #{deliverLat,jdbcType=DECIMAL},
+        </if>
+        <if test="takeNote != null ">
+            take_note = #{takeNote,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="repairShopContact != null ">
+            repair_shop_contact = #{repairShopContact,jdbcType=VARCHAR},
+        </if>
+        <if test="repairShopPhone != null ">
+            repair_shop_phone = #{repairShopPhone,jdbcType=VARCHAR},
+        </if>
+        <if test="storeName != null ">
+            store_name = #{storeName,jdbcType=VARCHAR},
+        </if>
+        <if test="storePhone != null ">
+            store_phone = #{storePhone,jdbcType=VARCHAR},
+        </if>
+        <if test="isUploadRecord != null ">
+            is_upload_record = #{isUploadRecord,jdbcType=INTEGER},
+        </if>
+        update_time = now(),
+        update_op = #{updateOp,jdbcType=VARCHAR}
+        where is_delete = 0 and date_format(pick_time, '%Y') = date_format(#{pickTime}, '%Y')
+        and pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+        and service_type = #{serviceType,jdbcType=INTEGER}
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="transCancelBatchUpdate">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update pick_deliver_order_info t
+            <set>
+                t.schedule_status = 18,
+                t.update_time = now()
+            </set>
+            <where>
+                t.pick_deliver_order_no = #{item.pickDeliverOrderNo}
+                and service_type = #{item.serviceType}
+                and date_format(t.pick_time, '%Y') = date_format(#{item.pickTime}, '%Y')
+            </where>
+        </foreach>
+    </update>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update pick_deliver_order_info t
+            <set>
+                t.schedule_status = #{item.scheduleStatus},
+                t.update_time = now(),
+                t.update_op = #{item.updateOp}
+            </set>
+            <where>
+                t.pick_deliver_order_no = #{item.pickDeliverOrderNo}
+                and service_type = #{item.serviceType}
+                and t.order_no = #{item.orderNo}
+                and date_format(t.pick_time, '%Y') = date_format(#{item.pickTime}, '%Y')
+            </where>
+        </foreach>
+    </update>
+
+    <update id="batchBackUpdate">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update pick_deliver_order_info t
+            <set>
+                t.schedule_status = 2,
+                t.field_app_status = null,
+                <if test="pickTime != null">
+                    t.pick_time = #{item.pickTime},
+                </if>
+                <if test="deliverTime != null">
+                    t.deliver_time = #{item.deliverTime},
+                </if>
+                <if test="pickAddr != null">
+                    t.pick_addr = #{item.pickAddr},
+                </if>
+                <if test="pickLong != null">
+                    t.pick_long = #{item.pickLong},
+                </if>
+                <if test="pickLat != null">
+                    t.pick_lat = #{item.pickLat},
+                </if>
+                <if test="deliverAddr != null">
+                    t.deliver_addr = #{item.deliverAddr},
+                </if>
+                <if test="deliverLong != null">
+                    t.deliver_long = #{item.deliverLong},
+                </if>
+                <if test="deliverLat != null">
+                    t.deliver_lat = #{item.deliverLat},
+                </if>
+                t.update_time = now(),
+                t.update_op = #{item.updateOp}
+            </set>
+            <where>
+                t.pick_deliver_order_no = #{item.pickDeliverOrderNo}
+                and service_type = #{item.serviceType}
+                and date_format(t.pick_time, '%Y') = date_format(#{item.oldPickTime}, '%Y')
+            </where>
+        </foreach>
+    </update>
+
+    <select id="queryWaitDispatch" parameterType="com.autoyol.field.progress.manage.entity.DispatchEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pick_deliver_order_info A
+        where A.is_delete = 0
+        and date_format(A.pick_time, '%Y') = date_format(#{pickTime}, '%Y')
+        and A.service_type = #{serverTypeKey,jdbcType=INTEGER}
+        and A.pick_deliver_order_no in
+        <foreach item="item" index="index" collection="pickDeliverOrderNoList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <sql id="queryCond">
+        <if test="pickDeliverOrderNo != null and pickDeliverOrderNo != ''">
+            and A.pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="transOrderNo != null and transOrderNo != ''">
+            and A.order_no = #{transOrderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="serverTypeKey != null">
+            and A.service_type = #{serverTypeKey,jdbcType=INTEGER}
+        </if>
+        <choose>
+            <when test="pickTimeMonthDay != null and pickTimeMonthDay != ''">
+                and date_format(A.pick_time, '%Y%m%d') = date_format(#{pickTime}, '%Y%m%d')
+            </when>
+            <otherwise>
+                and date_format(A.pick_time, '%Y') = date_format(#{pickTime}, '%Y')
+            </otherwise>
+        </choose>
+        <if test="scheduleStatusKey != null">
+            and A.schedule_status = #{scheduleStatusKey,jdbcType=INTEGER}
+        </if>
+        <if test="isUploadRecord != null">
+            and A.is_upload_record = #{isUploadRecord,jdbcType=INTEGER}
+        </if>
+
+        <if test="transSourceKey != null">
+            and O.source = #{transSourceKey,jdbcType=INTEGER}
+        </if>
+        <if test="sceneSourceKey != null">
+            and O.scene_source = #{sceneSourceKey,jdbcType=INTEGER}
+        </if>
+        <if test="offlineOrderTypeKey != null">
+            and O.offline_order_type = #{offlineOrderTypeKey,jdbcType=INTEGER}
+        </if>
+
+        <if test="vehicleNo != null">
+            and D.vehicle_no = #{vehicleNo,jdbcType=VARCHAR}
+        </if>
+        <if test="vehicleTypeKey != null">
+            and D.vehicle_type = #{vehicleTypeKey,jdbcType=INTEGER}
+        </if>
+
+        <if test="userName != null">
+            and B.user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userPhone != null">
+            and B.user_phone = #{userPhone,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <select id="queryByCond" parameterType="com.autoyol.field.progress.manage.request.tackback.TackBackPageReqVo"
+            resultMap="queryMap">
+        select
+        <include refid="Base_Column_List"/>
+        , O.belong_city, O.offline_order_type, O.partner, D.vehicle_type, D.vehicle_model, D.vehicle_no,
+        B.user_name, B.is_own_person, B.supplier_company_id, B.supplier_company_name, T.owner_name, T.renter_name, T.mem_flag
+        from pick_deliver_order_info A
+        LEFT JOIN pick_deliver_schedule_info B ON A.pick_deliver_order_no = B.pick_deliver_order_no
+        AND A.service_type = B.service_type
+        LEFT JOIN trans_order_info O ON A.order_no = O.order_no
+        LEFT JOIN trans_vehicle_info D ON A.order_no = D.order_no
+        LEFT JOIN trans_rent_user_info T ON A.order_no = T.order_no
+        where A.is_delete = 0
+        <include refid="queryCond"/>
+        limit #{start}, #{pageSize}
+    </select>
+
+    <select id="queryCountByCond" parameterType="com.autoyol.field.progress.manage.request.tackback.TackBackPageReqVo"
+            resultType="java.lang.Integer">
+        select
+        count(A.pick_deliver_order_no)
+        from pick_deliver_order_info A
+        LEFT JOIN pick_deliver_schedule_info B ON A.pick_deliver_order_no = B.pick_deliver_order_no
+        AND A.service_type = B.service_type
+        LEFT JOIN trans_order_info O ON A.order_no = O.order_no
+        LEFT JOIN trans_vehicle_info D ON A.order_no = D.order_no
+        where A.is_delete = 0
+        <include refid="queryCond"/>
+    </select>
+
+    <update id="updateSelectById" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverOrderInfoEntity">
+        update pick_deliver_order_info o
+        <set>
+            <if test="scheduleStatus != null">
+                o.schedule_status = #{scheduleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="scheduleStatus == 2">
+                o.field_app_status = null,
+            </if>
+            <choose>
+                <when test="scheduleStatus == 2">
+                    o.field_app_status = null,
+                </when>
+                <otherwise>
+                    o.field_app_status = #{fieldAppStatus,jdbcType=INTEGER},
+                </otherwise>
+            </choose>
+            <if test="oprType != null">
+                o.opr_type = #{oprType,jdbcType=INTEGER},
+            </if>
+            o.update_time = now(),
+            o.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where o.pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+        and service_type = #{serviceType}
+        and o.pick_time = #{pickTime,jdbcType=TIMESTAMP}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverOrderInfoEntity">
+        insert into pick_deliver_order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="pickDeliverOrderNo != null">
+                pick_deliver_order_no,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="isSupply != null">
+                is_supply,
+            </if>
+            <if test="oprType != null">
+                opr_type,
+            </if>
+            <if test="scheduleStatus != null">
+                schedule_status,
+            </if>
+            <if test="fieldAppStatus != null">
+                field_app_status,
+            </if>
+
+            <if test="isDirectCompensate != null">
+                is_direct_compensate,
+            </if>
+            <if test="channelKey != null">
+                channel_key,
+            </if>
+            <if test="serviceClass != null">
+                service_class,
+            </if>
+            <if test="isFree != null">
+                is_free,
+            </if>
+            <if test="serviceFee != null">
+                service_fee,
+            </if>
+            <if test="reportNo != null">
+                report_no,
+            </if>
+            <if test="goldKey != null">
+                gold_key,
+            </if>
+            <if test="orderChannelSource != null">
+                order_channel_source,
+            </if>
+            <if test="estimateServiceTime != null">
+                estimate_service_time,
+            </if>
+
+            <if test="pickTime != null">
+                pick_time,
+            </if>
+            <if test="pickAddr != null">
+                pick_addr,
+            </if>
+            <if test="pickLong != null">
+                pick_long,
+            </if>
+            <if test="pickLat != null">
+                pick_lat,
+            </if>
+            <if test="deliverTime != null">
+                deliver_time,
+            </if>
+            <if test="deliverAddr != null">
+                deliver_addr,
+            </if>
+            <if test="deliverLong != null">
+                deliver_long,
+            </if>
+            <if test="deliverLat != null">
+                deliver_lat,
+            </if>
+            <if test="takeNote != null">
+                take_note,
+            </if>
+
+            <if test="repairShopContact != null">
+                repair_shop_contact,
+            </if>
+            <if test="repairShopPhone != null">
+                repair_shop_phone,
+            </if>
+            <if test="storeName != null">
+                store_name,
+            </if>
+            <if test="storePhone != null">
+                store_phone,
+            </if>
+            <if test="isUploadRecord != null ">
+                is_upload_record,
+            </if>
+
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="pickDeliverOrderNo != null">
+                #{pickDeliverOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="isSupply != null">
+                #{isSupply,jdbcType=INTEGER},
+            </if>
+            <if test="oprType != null">
+                #{oprType,jdbcType=INTEGER},
+            </if>
+            <if test="scheduleStatus != null">
+                #{scheduleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="fieldAppStatus != null">
+                #{fieldAppStatus,jdbcType=INTEGER},
+            </if>
+
+            <if test="isDirectCompensate != null">
+                #{isDirectCompensate,jdbcType=INTEGER},
+            </if>
+            <if test="channelKey != null">
+                #{channelKey,jdbcType=INTEGER},
+            </if>
+            <if test="serviceClass != null">
+                #{serviceClass,jdbcType=INTEGER},
+            </if>
+            <if test="isFree != null">
+                #{isFree,jdbcType=INTEGER},
+            </if>
+            <if test="serviceFee != null">
+                #{serviceFee,jdbcType=DECIMAL},
+            </if>
+            <if test="reportNo != null">
+                #{reportNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goldKey != null">
+                #{goldKey,jdbcType=VARCHAR},
+            </if>
+            <if test="orderChannelSource != null">
+                #{orderChannelSource,jdbcType=INTEGER},
+            </if>
+            <if test="estimateServiceTime != null">
+                #{estimateServiceTime,jdbcType=VARCHAR},
+            </if>
+
+            <if test="pickTime != null">
+                #{pickTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickAddr != null">
+                #{pickAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="pickLong != null">
+                #{pickLong,jdbcType=DECIMAL},
+            </if>
+            <if test="pickLat != null">
+                #{pickLat,jdbcType=DECIMAL},
+            </if>
+            <if test="deliverTime != null">
+                #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliverAddr != null">
+                #{deliverAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverLong != null">
+                #{deliverLong,jdbcType=DECIMAL},
+            </if>
+            <if test="deliverLat != null">
+                #{deliverLat,jdbcType=DECIMAL},
+            </if>
+            <if test="takeNote != null">
+                #{takeNote,jdbcType=LONGVARCHAR},
+            </if>
+
+            <if test="repairShopContact != null">
+                #{repairShopContact,jdbcType=VARCHAR},
+            </if>
+            <if test="repairShopPhone != null">
+                #{repairShopPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="storeName != null">
+                #{storeName,jdbcType=VARCHAR},
+            </if>
+            <if test="storePhone != null">
+                #{storePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="isUploadRecord != null ">
+                #{isUploadRecord,jdbcType=INTEGER},
+            </if>
+
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

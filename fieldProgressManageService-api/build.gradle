@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven{url "http://10.0.3.208:8081/nexus/content/groups/public/"}
+        maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.autoyol.tool:dependency-management:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'dependency-management'
+group 'com.autoyol'
+version '1.0.1-SNAPSHOT'
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "com.autoyol:auto-web-starter:1.0-SNAPSHOT"
+    compile "org.springframework.cloud:spring-cloud-starter-openfeign"
+    compile('org.projectlombok:lombok')
+    //compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.13'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.autoyol'
+            artifactId = 'fieldProgressManageService-api'
+            version = '1.0.1-SNAPSHOT'
+
+            from components.java
+            artifact sourceJar
+        }
+    }
+}

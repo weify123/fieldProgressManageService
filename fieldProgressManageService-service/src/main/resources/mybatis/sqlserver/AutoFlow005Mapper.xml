@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoFlow005Mapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoFlow005Entity">
+    <id column="auto_fw05_id" jdbcType="BIGINT" property="autoFw05Id" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="pub_flndid" jdbcType="BIGINT" property="pubFlndid" />
+    <result column="pub_flndst" jdbcType="NVARCHAR" property="pubFlndst" />
+    <result column="pub_flowstate" jdbcType="NVARCHAR" property="pubFlowstate" />
+    <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg" />
+    <result column="pub_compid" jdbcType="BIGINT" property="pubCompid" />
+    <result column="auto_fw05_flowid" jdbcType="BIGINT" property="autoFw05Flowid" />
+    <result column="auto_fw05_billid" jdbcType="BIGINT" property="autoFw05Billid" />
+    <result column="auto_fw05_c001" jdbcType="NVARCHAR" property="autoFw05C001" />
+    <result column="auto_fw05_c002" jdbcType="NVARCHAR" property="autoFw05C002" />
+    <result column="auto_fw05_c005" jdbcType="NVARCHAR" property="autoFw05C005" />
+    <result column="auto_fw05_c004" jdbcType="NVARCHAR" property="autoFw05C004" />
+    <result column="auto_fw05_c003" jdbcType="NVARCHAR" property="autoFw05C003" />
+    <result column="auto_fw05_c006" jdbcType="NVARCHAR" property="autoFw05C006" />
+    <result column="auto_fw05_c007" jdbcType="NVARCHAR" property="autoFw05C007" />
+    <result column="auto_fw05_c008" jdbcType="NVARCHAR" property="autoFw05C008" />
+    <result column="auto_fw05_c009" jdbcType="NVARCHAR" property="autoFw05C009" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_fw05_id, pub_editflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    pub_flndid, pub_flndst, pub_flowstate, pub_impflg, pub_compid, auto_fw05_flowid, 
+    auto_fw05_billid, auto_fw05_c001, auto_fw05_c002, auto_fw05_c005, auto_fw05_c004, 
+    auto_fw05_c003, auto_fw05_c006, auto_fw05_c007, auto_fw05_c008, auto_fw05_c009
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_flow_005
+    where auto_fw05_id = #{autoFw05Id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoFlow005Entity" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from auto_flow_005
+    where 1=1
+    <if test="autoFw05Billid != null">
+      and auto_fw05_billid = #{autoFw05Billid,jdbcType=BIGINT}
+    </if>
+    <if test="autoFw05C001 != null">
+      and auto_fw05_c001 like '%' + #{autoFw05C001} + '%'
+    </if>
+    <if test="autoFw05C002 != null">
+      and auto_fw05_c002 like '%' + #{autoFw05C002} + '%'
+    </if>
+    <if test="autoFw05C003 != null">
+      and auto_fw05_c003 like '%' + #{autoFw05C003} + '%'
+    </if>
+    <if test="autoFw05C006 != null">
+      and auto_fw05_c006 like '%' + #{autoFw05C006} + '%'
+    </if>
+    <if test="pubFlowstate != null">
+      and pub_flowstate like '%' + #{pubFlowstate} + '%'
+    </if>
+
+    <if test="autoFw05C009 != null">
+      and auto_fw05_c009 like '%' + #{autoFw05C009} + '%'
+    </if>
+  </select>
+
+</mapper>

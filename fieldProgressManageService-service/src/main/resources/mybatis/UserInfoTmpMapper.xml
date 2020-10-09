@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.UserInfoTmpMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.UserInfoTmpEntity">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="contact_mobile" jdbcType="VARCHAR" property="contactMobile" />
+    <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="employment" jdbcType="INTEGER" property="employment" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="station" jdbcType="VARCHAR" property="station" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="distributable" jdbcType="INTEGER" property="distributable" />
+    <result column="id_card_uploaded" jdbcType="INTEGER" property="idCardUploaded" />
+    <result column="driver_uploaded" jdbcType="INTEGER" property="driverUploaded" />
+    <result column="avatar_uploaded" jdbcType="INTEGER" property="avatarUploaded" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_op" jdbcType="VARCHAR" property="createOp" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_op" jdbcType="VARCHAR" property="updateOp" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <select id="queryList" parameterType="com.autoyol.field.progress.manage.page.BasePage" resultMap="BaseResultMap">
+    select id, user_id, contact_name,
+      contact_mobile, id_no, address,
+      longitude, latitude, employment,
+      star, station, email,
+      distributable, id_card_uploaded, driver_uploaded,
+      avatar_uploaded, is_delete, create_op,
+      create_time, update_op, update_time
+      from user_info_tmp limit #{start}, #{pageSize}
+  </select>
+
+  <update id="batchUpdate">
+    <foreach collection="list" item="at" index="index" open="" close="" separator=";">
+      update user_info_tmp a
+      <set>
+        a.station = #{at.station,jdbcType=VARCHAR}
+      </set>
+      <where>
+        a.user_id =#{at.userId}
+      </where>
+    </foreach>
+  </update>
+</mapper>

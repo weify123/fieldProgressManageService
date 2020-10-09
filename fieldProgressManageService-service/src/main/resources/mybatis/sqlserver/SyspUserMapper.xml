@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.SyspUserMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.SyspUserEntity">
+        <id column="sysp_use_id" jdbcType="BIGINT" property="syspUseId"/>
+        <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag"/>
+        <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime"/>
+        <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid"/>
+        <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime"/>
+        <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid"/>
+        <result column="pub_compid" jdbcType="BIGINT" property="pubCompid"/>
+        <result column="sysp_use_loginname" jdbcType="NVARCHAR" property="syspUseLoginname"/>
+        <result column="sysp_use_pwd" jdbcType="NVARCHAR" property="syspUsePwd"/>
+        <result column="sysp_use_name" jdbcType="NVARCHAR" property="syspUseName"/>
+        <result column="sysp_use_duty" jdbcType="NVARCHAR" property="syspUseDuty"/>
+        <result column="sysp_use_orgid" jdbcType="BIGINT" property="syspUseOrgid"/>
+        <result column="sysp_use_type" jdbcType="INTEGER" property="syspUseType"/>
+        <result column="sysp_use_brole" jdbcType="BIGINT" property="syspUseBrole"/>
+        <result column="sysp_use_frole" jdbcType="BIGINT" property="syspUseFrole"/>
+        <result column="sysp_use_valid" jdbcType="BIT" property="syspUseValid"/>
+        <result column="sysp_use_isess" jdbcType="BIT" property="syspUseIsess"/>
+        <result column="sysp_use_autopwd" jdbcType="NVARCHAR" property="syspUseAutopwd"/>
+        <result column="sysp_use_all" jdbcType="BIT" property="syspUseAll"/>
+        <result column="sysp_use_stfid" jdbcType="BIGINT" property="syspUseStfid"/>
+        <result column="sysp_use_fnlang" jdbcType="NVARCHAR" property="syspUseFnlang"/>
+        <result column="sysp_use_fntype" jdbcType="INTEGER" property="syspUseFntype"/>
+        <result column="sysp_use_note" jdbcType="NVARCHAR" property="syspUseNote"/>
+        <result column="sysp_use_forder" jdbcType="NVARCHAR" property="syspUseForder"/>
+        <result column="sysp_use_wxid" jdbcType="NVARCHAR" property="syspUseWxid"/>
+        <result column="sysp_use_email" jdbcType="NVARCHAR" property="syspUseEmail"/>
+        <result column="sysp_use_role" jdbcType="NVARCHAR" property="syspUseRole"/>
+        <result column="sysp_use_phone" jdbcType="NVARCHAR" property="syspUsePhone"/>
+        <result column="sysp_use_dx01" jdbcType="BIT" property="syspUseDx01"/>
+        <result column="sysp_use_addr" jdbcType="NVARCHAR" property="syspUseAddr"/>
+        <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg"/>
+        <result column="sysp_use_dept" jdbcType="BIGINT" property="syspUseDept"/>
+        <result column="sysp_use_qdname" jdbcType="NVARCHAR" property="syspUseQdname"/>
+        <result column="sysp_use_sercompany" jdbcType="NVARCHAR" property="syspUseSercompany"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sysp_use_id, pub_editflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    pub_compid, sysp_use_loginname, sysp_use_pwd, sysp_use_name, sysp_use_duty, sysp_use_orgid, 
+    sysp_use_type, sysp_use_brole, sysp_use_frole, sysp_use_valid, sysp_use_isess, sysp_use_autopwd, 
+    sysp_use_all, sysp_use_stfid, sysp_use_fnlang, sysp_use_fntype, sysp_use_note, sysp_use_forder, 
+    sysp_use_wxid, sysp_use_email, sysp_use_role, sysp_use_phone, sysp_use_dx01, sysp_use_addr, 
+    pub_impflg, sysp_use_dept, sysp_use_qdname, sysp_use_sercompany
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sysp_user
+        where sysp_use_id = #{syspUseId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectSupplierUser" resultMap="BaseResultMap">
+   select
+    auto_cpinfo_id sysp_use_id, sysp_use_duty,
+    dbo.fun_get_dictdata('p_company',sysp_use_sercompany,'1') sysp_use_sercompany
+    from sysp_user s
+     left join sysp_role on s.sysp_use_brole=sysp_rol_id
+     left join auto_compinfo on s.sysp_use_sercompany = auto_cpinfo_comp2
+    where 1=1
+    -- and sysp_use_sercompany is not null
+    and sysp_use_duty is not null
+    -- and auto_cpinfo_comp1 in ('p_cl1_003','p_cl1_004')
+    and auto_cpinfo_valid = 1
+  </select>
+</mapper>

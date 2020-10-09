@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        maven{url "http://10.0.3.208:8081/nexus/content/groups/public/"}
+		maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.autoyol.tool:dependency-management:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+apply plugin: 'war'
+
+group = 'com.autoyol'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+targetCompatibility = 1.8
+
+mainClassName='com.autoyol.doc.parser.autodoc.AutoDocParser'
+springBoot {
+	mainClass = "com.autoyol.field.progress.manage.FieldProgressApplication"
+}
+
+repositories {
+	maven{url "http://10.0.3.208:8081/nexus/content/groups/public/"}
+	maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+	mavenCentral()
+}
+
+dependencies {
+	compile project(":fieldProgressManageService-api")
+	compile "com.autoyol:auto-web-starter:1.0-SNAPSHOT"
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile("com.autoyol.tools:prop-encrypt-spring-boot-starter:0.0.1-SNAPSHOT")
+	compile('mysql:mysql-connector-java')
+	compile('com.alibaba:fastjson:1.2.7')
+	compile("com.autoframework:auto-redis-lock:1.0-SNAPSHOT")
+	compile('org.projectlombok:lombok:1.18.6')
+	compile('com.ctrip.framework.apollo:apollo-client:0.11.0-SNAPSHOT')
+	compile("com.autoyol:cat-starter:0.0.1-SNAPSHOT")
+	compile 'com.autoyol.shorturl:short-url-feign:2.0-SNAPSHOT'
+	compile('com.autoyol.xxljob:xxljob-starter:2.0.1-SNAPSHOT')
+	compile("com.autoyol.tools:prop-encrypt-spring-boot-starter:0.0.1-SNAPSHOT")
+	compile('com.autoyol:memberDetailService-api:1.0.1-SNAPSHOT')
+	compile('com.autoyol.car:auto-car-service-api:2020022001-SNAPSHOT')
+	compile('com.autoyol:sopSystemService-util:1.0.0-SNAPSHOT')
+
+	compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.5.RELEASE'
+	//compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '1.3.5.RELEASE'
+	compile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
+
+	compile 'org.springframework.amqp:spring-rabbit:1.7.5.RELEASE'
+	compile 'com.rabbitmq:amqp-client:4.0.3'
+	compile("com.autoframework:auto-mq-event:1.0-SNAPSHOT")
+
+	//compile 'com.xuxueli:xxl-job-core:2.0.1'
+
+	compile("com.netflix.hystrix:hystrix-metrics-event-stream:1.5.12")
+	compile("com.netflix.hystrix:hystrix-javanica:1.5.12")
+	compile("com.netflix.archaius:archaius-core:0.7.4")
+	compile("commons-configuration:commons-configuration:1.8")
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
+	compile group: 'org.apache.poi', name: 'poi', version: '3.9'
+	compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '3.9'
+	compile group: 'org.apache.poi', name: 'poi-excelant', version: '3.9'
+	compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+	compile("org.apache.commons:commons-lang3:3.3.2")
+	compile("org.apache.commons:commons-collections4:4.0")
+	compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.8.3'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	compile("com.autoyol:auto-doc:1.0-SNAPSHOT"){
+		exclude module:'servlet-api'
+	}
+}

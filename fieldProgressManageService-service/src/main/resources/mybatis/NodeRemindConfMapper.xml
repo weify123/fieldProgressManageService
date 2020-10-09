@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.NodeRemindConfMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="flow_name_key" jdbcType="INTEGER" property="flowNameKey"/>
+        <result column="flow_server_type" jdbcType="INTEGER" property="flowServerType"/>
+        <result column="flow_node_name_key" jdbcType="INTEGER" property="flowNodeNameKey"/>
+        <result column="notice_content" jdbcType="VARCHAR" property="noticeContent"/>
+        <result column="notice_count" jdbcType="INTEGER" property="noticeCount"/>
+        <result column="notice_start_time" jdbcType="TIMESTAMP" property="noticeStartTime"/>
+        <result column="notice_end_time" jdbcType="TIMESTAMP" property="noticeEndTime"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, flow_name_key, flow_server_type, flow_node_name_key, notice_content, notice_count,
+        notice_start_time, notice_end_time, is_delete, create_op, create_time, update_op, update_time
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from node_remind_conf n where n.is_delete=0 and n.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="countExist" parameterType="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity"
+            resultType="java.lang.Integer">
+        select count(n.id)
+        from node_remind_conf n where n.is_delete=0
+        <if test="flowNameKey != null">
+            AND n.flow_name_key = #{flowNameKey}
+        </if>
+        <if test="flowServerType != null">
+            AND n.flow_server_type = #{flowServerType}
+        </if>
+        <if test="flowNodeNameKey != null">
+            AND n.flow_node_name_key = #{flowNodeNameKey}
+        </if>
+        <if test="id != null">
+            AND n.id != #{id}
+        </if>
+        AND (
+        (date_format(n.notice_start_time, '%Y-%m-%d') <![CDATA[ <= ]]> date_format(#{noticeStartTime}, '%Y-%m-%d')
+        AND date_format(n.notice_end_time, '%Y-%m-%d') <![CDATA[ > ]]> date_format(#{noticeStartTime}, '%Y-%m-%d'))
+        or (date_format(n.notice_start_time, '%Y-%m-%d') <![CDATA[ < ]]> date_format(#{noticeEndTime}, '%Y-%m-%d')
+        AND date_format(n.notice_end_time, '%Y-%m-%d') <![CDATA[ >= ]]> date_format(#{noticeEndTime}, '%Y-%m-%d'))
+
+        or (date_format(n.notice_start_time, '%Y-%m-%d') <![CDATA[ >= ]]> date_format(#{noticeStartTime}, '%Y-%m-%d')
+        AND date_format(n.notice_end_time, '%Y-%m-%d') <![CDATA[ <= ]]> date_format(#{noticeEndTime}, '%Y-%m-%d'))
+        )
+
+    </select>
+
+    <select id="findByCond" parameterType="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from node_remind_conf n where n.is_delete=0
+        <if test="flowNameKey != null">
+            AND n.flow_name_key = #{flowNameKey}
+        </if>
+        <if test="flowServerType != null">
+            AND n.flow_server_type = #{flowServerType}
+        </if>
+        <if test="flowNodeNameKey != null">
+            AND n.flow_node_name_key = #{flowNodeNameKey}
+        </if>
+        <if test="noticeStartTime != null">
+            AND n.notice_start_time >= #{noticeStartTime}
+        </if>
+        <if test="noticeEndTime != null">
+            AND n.notice_end_time <![CDATA[ <= ]]> #{noticeEndTime}
+        </if>
+        <if test="effectived != null">
+            <choose>
+                <when test="effectived == 1">
+                    AND date_format(n.notice_end_time, '%Y-%m-%d') <![CDATA[ >= ]]> date_format(now(), '%Y-%m-%d')
+                </when>
+                <otherwise>
+                    AND date_format(n.notice_end_time, '%Y-%m-%d') <![CDATA[ < ]]> date_format(now(), '%Y-%m-%d')
+                </otherwise>
+            </choose>
+        </if>
+
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity">
+        update node_remind_conf n
+        <set>
+            <if test="noticeContent != null and noticeContent != ''">
+                n.notice_content = #{noticeContent,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeCount != null">
+                n.notice_count = #{noticeCount,jdbcType=INTEGER},
+            </if>
+            <if test="noticeStartTime != null">
+                n.notice_start_time = #{noticeStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="noticeEndTime != null">
+                n.notice_end_time = #{noticeEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                n.is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            n.update_time = now(),
+            n.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where n.id = #{id,jdbcType=INTEGER}
+    </update>
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity">
+    insert into node_remind_conf (id, flow_name_key, flow_server_type, 
+      flow_node_name_key, notice_content, notice_count, 
+      notice_start_time, notice_end_time,
+      is_delete, create_op, create_time, 
+      update_op, update_time)
+    values (#{id,jdbcType=INTEGER}, #{flowNameKey,jdbcType=INTEGER}, #{flowServerType,jdbcType=INTEGER}, 
+      #{flowNodeNameKey,jdbcType=INTEGER}, #{noticeContent,jdbcType=VARCHAR}, #{noticeCount,jdbcType=INTEGER}, 
+      #{noticeStartTime,jdbcType=TIMESTAMP}, #{noticeEndTime,jdbcType=TIMESTAMP},
+      #{isDelete,jdbcType=INTEGER}, #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateOp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.NodeRemindConfEntity">
+        insert into node_remind_conf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="flowNameKey != null">
+                flow_name_key,
+            </if>
+            <if test="flowServerType != null">
+                flow_server_type,
+            </if>
+            <if test="flowNodeNameKey != null">
+                flow_node_name_key,
+            </if>
+            <if test="noticeContent != null">
+                notice_content,
+            </if>
+            <if test="noticeCount != null">
+                notice_count,
+            </if>
+            <if test="noticeStartTime != null">
+                notice_start_time,
+            </if>
+            <if test="noticeEndTime != null">
+                notice_end_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="flowNameKey != null">
+                #{flowNameKey,jdbcType=INTEGER},
+            </if>
+            <if test="flowServerType != null">
+                #{flowServerType,jdbcType=INTEGER},
+            </if>
+            <if test="flowNodeNameKey != null">
+                #{flowNodeNameKey,jdbcType=INTEGER},
+            </if>
+            <if test="noticeContent != null">
+                #{noticeContent,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeCount != null">
+                #{noticeCount,jdbcType=INTEGER},
+            </if>
+            <if test="noticeStartTime != null">
+                #{noticeStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="noticeEndTime != null">
+                #{noticeEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

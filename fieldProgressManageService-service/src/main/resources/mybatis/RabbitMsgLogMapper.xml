@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.RabbitMsgLogMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.RabbitMsgLogEntity">
+        <result column="msg_id" jdbcType="VARCHAR" property="msgId"/>
+        <result column="exchange" jdbcType="VARCHAR" property="exchange"/>
+        <result column="routing_key" jdbcType="VARCHAR" property="routingKey"/>
+        <result column="service_type" jdbcType="INTEGER" property="serviceType"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="try_count" jdbcType="INTEGER" property="tryCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithMsg"
+               type="com.autoyol.field.progress.manage.entity.RabbitMsgLogEntity">
+        <result column="msg" jdbcType="LONGVARCHAR" property="msg"/>
+    </resultMap>
+    <sql id="Blob_Column_List">
+        msg
+    </sql>
+
+    <sql id="Base_Column_List">
+      msg_id, msg, exchange, routing_key, `status`, try_count, create_time, update_time
+    </sql>
+
+    <select id="selectMqSending" resultMap="ResultMapWithMsg">
+        select
+        <include refid="Base_Column_List"/>
+        from rabbit_msg_log t where t.`status` = 0
+        and t.service_type in (0, 2, 4, 6)
+    </select>
+
+    <select id="selectSupplierConsuming" resultMap="ResultMapWithMsg">
+        select
+        <include refid="Base_Column_List"/>
+        from rabbit_msg_log t where t.`status` = 4
+        and t.service_type in (1, 3, 5, 7, 8, 9)
+    </select>
+
+    <update id="updateByMsgId" parameterType="com.autoyol.field.progress.manage.entity.RabbitMsgLogEntity">
+        update rabbit_msg_log t
+        <set>
+            <if test="tryCount != null">
+                t.try_count = #{tryCount,jdbcType=INTEGER},
+            </if>
+            t.`status` = #{status,jdbcType=INTEGER},
+            t.update_time = now()
+        </set>
+        where t.msg_id = #{msgId,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.RabbitMsgLogEntity">
+        insert into rabbit_msg_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                msg_id,
+            </if>
+            <if test="exchange != null">
+                exchange,
+            </if>
+            <if test="routingKey != null">
+                routing_key,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="tryCount != null">
+                try_count,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="msg != null">
+                msg,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                #{msgId,jdbcType=VARCHAR},
+            </if>
+            <if test="exchange != null">
+                #{exchange,jdbcType=VARCHAR},
+            </if>
+            <if test="routingKey != null">
+                #{routingKey,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="tryCount != null">
+                #{tryCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="msg != null">
+                #{msg,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

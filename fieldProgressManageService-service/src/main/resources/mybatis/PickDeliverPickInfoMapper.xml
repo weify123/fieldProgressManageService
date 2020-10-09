@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.PickDeliverPickInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.PickDeliverPickInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="pick_deliver_order_no" jdbcType="VARCHAR" property="pickDeliverOrderNo"/>
+        <result column="service_type" jdbcType="INTEGER" property="serviceType"/>
+        <result column="real_pick_time" jdbcType="TIMESTAMP" property="realPickTime"/>
+        <result column="pick_oil" jdbcType="DECIMAL" property="pickOil"/>
+        <result column="estimate_pick_kilo" jdbcType="DECIMAL" property="estimatePickKilo"/>
+        <result column="pick_kilo" jdbcType="INTEGER" property="pickKilo"/>
+        <result column="vehicle_status" jdbcType="INTEGER" property="vehicleStatus"/>
+        <result column="change_pick_address" jdbcType="VARCHAR" property="changePickAddress"/>
+        <result column="change_pick_long" jdbcType="DECIMAL" property="changePickLong"/>
+        <result column="change_pick_lat" jdbcType="DECIMAL" property="changePickLat"/>
+        <result column="edit_status" jdbcType="INTEGER" property="editStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, pick_deliver_order_no, service_type, real_pick_time,
+      pick_oil, estimate_pick_kilo, pick_kilo,
+      vehicle_status, change_pick_address, change_pick_long,
+      change_pick_lat, edit_status, is_delete,
+      create_op, create_time, update_op, update_time
+    </sql>
+
+    <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverPickInfoEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pick_deliver_pick_info
+        where is_delete = 0
+        and pick_deliver_order_no = #{pickDeliverOrderNo}
+        and service_type = #{serviceType}
+    </select>
+
+    <update id="updateByTackBackOrderNo" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverPickInfoEntity">
+        update pick_deliver_pick_info t
+        <set>
+            <if test="realPickTime != null">
+                t.real_pick_time = #{realPickTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickOil != null">
+                t.pick_oil = #{pickOil,jdbcType=DECIMAL},
+            </if>
+            <if test="estimatePickKilo != null">
+                t.estimate_pick_kilo = #{estimatePickKilo,jdbcType=DECIMAL},
+            </if>
+            <if test="pickKilo != null">
+                t.pick_kilo = #{pickKilo,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleStatus != null">
+                t.vehicle_status = #{vehicleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="changePickAddress != null and changePickAddress != ''">
+                t.change_pick_address = #{changePickAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="changePickLong != null">
+                t.change_pick_long = #{changePickLong,jdbcType=DECIMAL},
+            </if>
+            <if test="changePickLat != null">
+                t.change_pick_lat = #{changePickLat,jdbcType=DECIMAL},
+            </if>
+            <if test="editStatus != null">
+                t.edit_status = #{editStatus,jdbcType=INTEGER},
+            </if>
+            t.update_time = now(),
+            t.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where t.pick_deliver_order_no = #{pickDeliverOrderNo,jdbcType=VARCHAR}
+        and t.service_type = #{serviceType,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.PickDeliverPickInfoEntity">
+        insert into pick_deliver_pick_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pickDeliverOrderNo != null">
+                pick_deliver_order_no,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="realPickTime != null">
+                real_pick_time,
+            </if>
+            <if test="pickOil != null">
+                pick_oil,
+            </if>
+            <if test="estimatePickKilo != null">
+                estimate_pick_kilo,
+            </if>
+            <if test="pickKilo != null">
+                pick_kilo,
+            </if>
+            <if test="vehicleStatus != null">
+                vehicle_status,
+            </if>
+            <if test="changePickAddress != null">
+                change_pick_address,
+            </if>
+            <if test="changePickLong != null">
+                change_pick_long,
+            </if>
+            <if test="changePickLat != null">
+                change_pick_lat,
+            </if>
+            <if test="editStatus != null">
+                edit_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="pickDeliverOrderNo != null">
+                #{pickDeliverOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="realPickTime != null">
+                #{realPickTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickOil != null">
+                #{pickOil,jdbcType=DECIMAL},
+            </if>
+            <if test="estimatePickKilo != null">
+                #{estimatePickKilo,jdbcType=DECIMAL},
+            </if>
+            <if test="pickKilo != null">
+                #{pickKilo,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleStatus != null">
+                #{vehicleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="changePickAddress != null">
+                #{changePickAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="changePickLong != null">
+                #{changePickLong,jdbcType=DECIMAL},
+            </if>
+            <if test="changePickLat != null">
+                #{changePickLat,jdbcType=DECIMAL},
+            </if>
+            <if test="editStatus != null">
+                #{editStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.TransVehicleInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.TransVehicleInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="vehicle_type" jdbcType="INTEGER" property="vehicleType"/>
+        <result column="escrow_admin" jdbcType="VARCHAR" property="escrowAdmin"/>
+        <result column="escrow_admin_phone" jdbcType="VARCHAR" property="escrowAdminPhone"/>
+        <result column="vehicle_model" jdbcType="VARCHAR" property="vehicleModel"/>
+        <result column="vehicle_no" jdbcType="VARCHAR" property="vehicleNo"/>
+        <result column="tank_capacity" jdbcType="VARCHAR" property="tankCapacity"/>
+        <result column="oil_capacity" jdbcType="VARCHAR" property="oilCapacity"/>
+        <result column="displacement" jdbcType="VARCHAR" property="displacement"/>
+        <result column="oil_scale_denominator" jdbcType="VARCHAR" property="oilScaleDenominator"/>
+        <result column="engine_type" jdbcType="INTEGER" property="engineType"/>
+        <result column="oil_price" jdbcType="DECIMAL" property="oilPrice"/>
+        <result column="oil_unit_price" jdbcType="VARCHAR" property="oilUnitPrice"/>
+        <result column="day_mileage" jdbcType="VARCHAR" property="dayMileage"/>
+        <result column="guide_day_price" jdbcType="DECIMAL" property="guideDayPrice"/>
+        <result column="detect_status" jdbcType="INTEGER" property="detectStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, order_no, vehicle_type, escrow_admin, escrow_admin_phone, vehicle_model, vehicle_no, tank_capacity, oil_capacity, displacement,
+    oil_scale_denominator, engine_type, oil_price, oil_unit_price, day_mileage, guide_day_price, detect_status, is_delete,
+    create_op, create_time, update_op, update_time
+  </sql>
+
+    <select id="queryByOrderNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trans_vehicle_info
+        where is_delete = 0
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByOrderNoList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trans_vehicle_info
+        where is_delete = 0
+        and order_no in
+        <foreach item="item" index="index" collection="orderNoList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateByOrderNo" parameterType="com.autoyol.field.progress.manage.entity.TransVehicleInfoEntity">
+        update trans_vehicle_info
+        set
+        <if test="vehicleType != null ">
+            vehicle_type = #{vehicleType,jdbcType=INTEGER},
+        </if>
+        <if test="escrowAdmin != null ">
+          escrow_admin = #{escrowAdmin,jdbcType=VARCHAR},
+        </if>
+        <if test="escrowAdminPhone != null ">
+          escrow_admin_phone = #{escrowAdminPhone,jdbcType=VARCHAR},
+        </if>
+        <if test="vehicleModel != null ">
+          vehicle_model = #{vehicleModel,jdbcType=VARCHAR},
+        </if>
+        <if test="vehicleNo != null ">
+          vehicle_no = #{vehicleNo,jdbcType=VARCHAR},
+        </if>
+        <if test="tankCapacity != null ">
+          tank_capacity = #{tankCapacity,jdbcType=VARCHAR},
+        </if>
+        <if test="oilCapacity != null ">
+          oil_capacity = #{oilCapacity,jdbcType=VARCHAR},
+        </if>
+        <if test="displacement != null ">
+          displacement = #{displacement,jdbcType=VARCHAR},
+        </if>
+        <if test="oilScaleDenominator != null ">
+          oil_scale_denominator = #{oilScaleDenominator,jdbcType=VARCHAR},
+        </if>
+        <if test="engineType != null ">
+          engine_type = #{engineType,jdbcType=INTEGER},
+        </if>
+        <if test="oilPrice != null ">
+          oil_price = #{oilPrice,jdbcType=DECIMAL},
+        </if>
+        <if test="oilUnitPrice != null ">
+          oil_unit_price = #{oilUnitPrice,jdbcType=VARCHAR},
+        </if>
+        <if test="dayMileage != null ">
+          day_mileage = #{dayMileage,jdbcType=VARCHAR},
+        </if>
+        <if test="guideDayPrice != null ">
+          guide_day_price = #{guideDayPrice,jdbcType=DECIMAL},
+        </if>
+        <if test="detectStatus != null ">
+          detect_status = #{detectStatus,jdbcType=INTEGER},
+        </if>
+        update_time = now(),
+        update_op = #{updateOp,jdbcType=VARCHAR}
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.TransVehicleInfoEntity">
+        insert into trans_vehicle_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="vehicleType != null">
+                vehicle_type,
+            </if>
+            <if test="escrowAdmin != null">
+                escrow_admin,
+            </if>
+            <if test="escrowAdminPhone != null">
+                escrow_admin_phone,
+            </if>
+            <if test="vehicleModel != null">
+                vehicle_model,
+            </if>
+            <if test="vehicleNo != null">
+                vehicle_no,
+            </if>
+            <if test="tankCapacity != null">
+                tank_capacity,
+            </if>
+            <if test="oilCapacity != null">
+                oil_capacity,
+            </if>
+            <if test="displacement != null">
+                displacement,
+            </if>
+            <if test="oilScaleDenominator != null">
+                oil_scale_denominator,
+            </if>
+            <if test="engineType != null">
+                engine_type,
+            </if>
+            <if test="oilPrice != null">
+                oil_price,
+            </if>
+            <if test="oilUnitPrice != null">
+                oil_unit_price,
+            </if>
+            <if test="dayMileage != null">
+                day_mileage,
+            </if>
+            <if test="guideDayPrice != null">
+                guide_day_price,
+            </if>
+            <if test="detectStatus != null">
+                detect_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleType != null">
+                #{vehicleType,jdbcType=INTEGER},
+            </if>
+            <if test="escrowAdmin != null">
+                #{escrowAdmin,jdbcType=VARCHAR},
+            </if>
+            <if test="escrowAdminPhone != null">
+                #{escrowAdminPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleModel != null">
+                #{vehicleModel,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleNo != null">
+                #{vehicleNo,jdbcType=VARCHAR},
+            </if>
+            <if test="tankCapacity != null">
+                #{tankCapacity,jdbcType=VARCHAR},
+            </if>
+            <if test="oilCapacity != null">
+                #{oilCapacity,jdbcType=VARCHAR},
+            </if>
+            <if test="displacement != null">
+                #{displacement,jdbcType=VARCHAR},
+            </if>
+            <if test="oilScaleDenominator != null">
+                #{oilScaleDenominator,jdbcType=VARCHAR},
+            </if>
+            <if test="engineType != null">
+                #{engineType,jdbcType=INTEGER},
+            </if>
+            <if test="oilPrice != null">
+                #{oilPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="oilUnitPrice != null">
+                #{oilUnitPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="dayMileage != null">
+                #{dayMileage,jdbcType=VARCHAR},
+            </if>
+            <if test="guideDayPrice != null">
+                #{guideDayPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="detectStatus != null">
+                #{detectStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

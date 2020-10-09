@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoOther001Mapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoOther001Entity">
+    <id column="auto_ot01_id" jdbcType="BIGINT" property="autoOt01Id" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg" />
+    <result column="pub_compid" jdbcType="BIGINT" property="pubCompid" />
+    <result column="auto_ot01_c001" jdbcType="NVARCHAR" property="autoOt01C001" />
+    <result column="auto_ot01_c002" jdbcType="NVARCHAR" property="autoOt01C002" />
+    <result column="auto_ot01_c003" jdbcType="NVARCHAR" property="autoOt01C003" />
+    <result column="auto_ot01_c004" jdbcType="NVARCHAR" property="autoOt01C004" />
+    <result column="auto_ot01_c005" jdbcType="NVARCHAR" property="autoOt01C005" />
+    <result column="auto_ot01_c006" jdbcType="BIT" property="autoOt01C006" />
+    <result column="auto_ot01_c007" jdbcType="NVARCHAR" property="autoOt01C007" />
+    <result column="auto_ot01_c008" jdbcType="NVARCHAR" property="autoOt01C008" />
+    <result column="auto_ot01_c009" jdbcType="NVARCHAR" property="autoOt01C009" />
+    <result column="auto_ot01_sercompany" jdbcType="NVARCHAR" property="autoOt01Sercompany" />
+    <result column="auto_ot01_employment" jdbcType="NVARCHAR" property="autoOt01Employment" />
+    <result column="auto_ot01_cname" jdbcType="BIGINT" property="autoOt01Cname" />
+    <result column="auto_ot01_ctime" jdbcType="TIMESTAMP" property="autoOt01Ctime" />
+    <result column="auto_ot01_post" jdbcType="NVARCHAR" property="autoOt01Post" />
+    <result column="auto_ot01_idno" jdbcType="NVARCHAR" property="autoOt01Idno" />
+    <result column="auto_ot01_idphoto" jdbcType="NVARCHAR" property="autoOt01Idphoto" />
+    <result column="auto_ot01_portraitphoto" jdbcType="NVARCHAR" property="autoOt01Portraitphoto" />
+    <result column="auto_ot01_dlphoto" jdbcType="NVARCHAR" property="autoOt01Dlphoto" />
+    <result column="auto_ot01_portraittag" jdbcType="INTEGER" property="autoOt01Portraittag" />
+    <result column="auto_ot01_idfphoto" jdbcType="NVARCHAR" property="autoOt01Idfphoto" />
+    <result column="auto_ot01_idbphoto" jdbcType="NVARCHAR" property="autoOt01Idbphoto" />
+    <result column="auto_ot01_idftag" jdbcType="INTEGER" property="autoOt01Idftag" />
+    <result column="auto_ot01_idbtag" jdbcType="INTEGER" property="autoOt01Idbtag" />
+    <result column="auto_ot01_dlfphoto" jdbcType="NVARCHAR" property="autoOt01Dlfphoto" />
+    <result column="auto_ot01_dlbphoto" jdbcType="NVARCHAR" property="autoOt01Dlbphoto" />
+    <result column="auto_ot01_dlftag" jdbcType="INTEGER" property="autoOt01Dlftag" />
+    <result column="auto_ot01_dlbtag" jdbcType="INTEGER" property="autoOt01Dlbtag" />
+    <result column="auto_ot01_addrlat" jdbcType="NVARCHAR" property="autoOt01Addrlat" />
+    <result column="auto_ot01_addrlon" jdbcType="NVARCHAR" property="autoOt01Addrlon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_ot01_id, A.pub_editflag, A.pub_crttime, A.pub_crtusid, A.pub_fupdtime, A.pub_fupdusid,
+    A.pub_impflg, A.pub_compid, auto_ot01_c001, auto_ot01_c002, auto_ot01_c003, auto_ot01_c004,
+    auto_ot01_c005, auto_ot01_c006, auto_ot01_c007, auto_ot01_c008, auto_ot01_c009, auto_ot01_sercompany, 
+    auto_ot01_employment, auto_ot01_cname, auto_ot01_ctime, auto_ot01_post, auto_ot01_idno, 
+    auto_ot01_idphoto, auto_ot01_portraitphoto, auto_ot01_dlphoto, auto_ot01_portraittag, 
+    auto_ot01_idfphoto, auto_ot01_idbphoto, auto_ot01_idftag, auto_ot01_idbtag, auto_ot01_dlfphoto, 
+    auto_ot01_dlbphoto, auto_ot01_dlftag, auto_ot01_dlbtag, auto_ot01_addrlat, auto_ot01_addrlon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_other_001 A
+    where auto_ot01_id = #{autoOt01Id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from auto_other_001 A
+    where auto_ot01_c002 like '%' + #{name} + '%'
+  </select>
+
+  <select id="countByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoOther001Entity" resultType="java.lang.Integer">
+    select
+    count(1)
+    from auto_other_001 A left join auto_other_002 on auto_ot01_id = auto_ot02_c001
+    <where>
+      <include refid="cond"></include>
+    </where>
+  </select>
+
+  <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoOther001Entity" resultMap="BaseResultMap">
+    SELECT
+    top (#{pageSize})
+    <include refid="Base_Column_List"/>
+    FROM
+    ( SELECT row_number ( ) over ( ORDER BY auto_ot01_id ) AS rownumber,
+    <include refid="Base_Column_List"/>
+    FROM auto_other_001 A) A left join auto_other_002 on auto_ot01_id = auto_ot02_c001
+    <where>
+      rownumber > #{page} and
+      <include refid="cond"></include>
+    </where>
+
+  </select>
+
+  <sql id="cond">
+    auto_ot02_type in ('1','4') and auto_ot02_c002 = convert(varchar(10),GETDATE(),20)
+    <if test="autoOt01C002 != null and autoOt01C002 != ''">
+      and auto_ot01_c002 like '%' + #{autoOt01C002} + '%'
+    </if>
+    <if test="autoOt01Sercompany != null">
+      and auto_ot01_sercompany = #{autoOt01Sercompany}
+    </if>
+    <if test="autoOt01C007 != null">
+      and auto_ot01_c007 = #{autoOt01C007}
+    </if>
+  </sql>
+
+</mapper>

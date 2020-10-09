@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AotuInfor005Mapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity">
+        <id column="auto_inf05_id" jdbcType="BIGINT" property="autoInf05Id"/>
+        <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag"/>
+        <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime"/>
+        <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid"/>
+        <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime"/>
+        <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid"/>
+        <result column="pub_compid" jdbcType="BIGINT" property="pubCompid"/>
+        <result column="auto_inf05_c001" jdbcType="NVARCHAR" property="autoInf05C001"/>
+        <result column="auto_inf05_c002" jdbcType="NVARCHAR" property="autoInf05C002"/>
+        <result column="auto_inf05_c003" jdbcType="NVARCHAR" property="autoInf05C003"/>
+        <result column="auto_inf05_c004" jdbcType="TIMESTAMP" property="autoInf05C004"/>
+        <result column="auto_inf05_c005" jdbcType="TIMESTAMP" property="autoInf05C005"/>
+        <result column="auto_inf05_c006" jdbcType="NVARCHAR" property="autoInf05C006"/>
+        <result column="auto_inf05_c007" jdbcType="NVARCHAR" property="autoInf05C007"/>
+        <result column="auto_inf05_c008" jdbcType="NVARCHAR" property="autoInf05C008"/>
+        <result column="auto_inf05_c009" jdbcType="NVARCHAR" property="autoInf05C009"/>
+        <result column="auto_inf05_c010" jdbcType="NVARCHAR" property="autoInf05C010"/>
+        <result column="auto_inf05_c011" jdbcType="NVARCHAR" property="autoInf05C011"/>
+        <result column="auto_inf05_c012" jdbcType="NVARCHAR" property="autoInf05C012"/>
+        <result column="auto_inf05_c015" jdbcType="NVARCHAR" property="autoInf05C015"/>
+        <result column="auto_inf05_c014" jdbcType="NVARCHAR" property="autoInf05C014"/>
+        <result column="auto_inf05_c013" jdbcType="NVARCHAR" property="autoInf05C013"/>
+        <result column="auto_inf05_c016" jdbcType="NVARCHAR" property="autoInf05C016"/>
+        <result column="auto_inf05_c017" jdbcType="TIMESTAMP" property="autoInf05C017"/>
+        <result column="auto_inf05_c018" jdbcType="TIMESTAMP" property="autoInf05C018"/>
+        <result column="auto_inf05_c019" jdbcType="NVARCHAR" property="autoInf05C019"/>
+        <result column="auto_inf05_c020" jdbcType="NVARCHAR" property="autoInf05C020"/>
+        <result column="auto_inf05_c021" jdbcType="NVARCHAR" property="autoInf05C021"/>
+        <result column="auto_inf05_c022" jdbcType="NVARCHAR" property="autoInf05C022"/>
+        <result column="auto_inf05_c025" jdbcType="NVARCHAR" property="autoInf05C025"/>
+        <result column="auto_inf05_c024" jdbcType="TIMESTAMP" property="autoInf05C024"/>
+        <result column="auto_inf05_c023" jdbcType="NVARCHAR" property="autoInf05C023"/>
+        <result column="auto_inf05_c026" jdbcType="TIMESTAMP" property="autoInf05C026"/>
+        <result column="auto_inf05_c027" jdbcType="TIMESTAMP" property="autoInf05C027"/>
+        <result column="auto_inf05_c028" jdbcType="NVARCHAR" property="autoInf05C028"/>
+        <result column="auto_inf05_c029" jdbcType="NVARCHAR" property="autoInf05C029"/>
+        <result column="auto_inf05_c050" jdbcType="NVARCHAR" property="autoInf05C050"/>
+        <result column="auto_inf05_c051" jdbcType="NVARCHAR" property="autoInf05C051"/>
+        <result column="auto_inf05_c052" jdbcType="NVARCHAR" property="autoInf05C052"/>
+        <result column="auto_inf05_c055" jdbcType="NVARCHAR" property="autoInf05C055"/>
+        <result column="auto_inf05_c054" jdbcType="NVARCHAR" property="autoInf05C054"/>
+        <result column="auto_inf05_c053" jdbcType="NVARCHAR" property="autoInf05C053"/>
+        <result column="auto_inf05_c056" jdbcType="NVARCHAR" property="autoInf05C056"/>
+        <result column="auto_inf05_c058" jdbcType="NVARCHAR" property="autoInf05C058"/>
+        <result column="auto_inf05_c057" jdbcType="NVARCHAR" property="autoInf05C057"/>
+        <result column="auto_inf05_c059" jdbcType="BIGINT" property="autoInf05C059"/>
+        <result column="auto_inf05_i001" jdbcType="BIGINT" property="autoInf05I001"/>
+        <result column="auto_inf05_i002" jdbcType="BIGINT" property="autoInf05I002"/>
+        <result column="auto_inf05_i005" jdbcType="BIGINT" property="autoInf05I005"/>
+        <result column="auto_inf05_i004" jdbcType="BIGINT" property="autoInf05I004"/>
+        <result column="auto_inf05_i003" jdbcType="BIGINT" property="autoInf05I003"/>
+        <result column="auto_inf05_i006" jdbcType="BIGINT" property="autoInf05I006"/>
+        <result column="auto_inf05_i007" jdbcType="BIGINT" property="autoInf05I007"/>
+        <result column="auto_inf05_i008" jdbcType="BIGINT" property="autoInf05I008"/>
+        <result column="auto_inf05_i009" jdbcType="BIGINT" property="autoInf05I009"/>
+        <result column="auto_inf05_n001" jdbcType="NUMERIC" property="autoInf05N001"/>
+        <result column="auto_inf05_n002" jdbcType="NUMERIC" property="autoInf05N002"/>
+        <result column="auto_inf05_n005" jdbcType="NUMERIC" property="autoInf05N005"/>
+        <result column="auto_inf05_n004" jdbcType="NUMERIC" property="autoInf05N004"/>
+        <result column="auto_inf05_n003" jdbcType="NUMERIC" property="autoInf05N003"/>
+        <result column="auto_inf05_n006" jdbcType="NUMERIC" property="autoInf05N006"/>
+        <result column="auto_inf05_d001" jdbcType="TIMESTAMP" property="autoInf05D001"/>
+        <result column="auto_inf05_d002" jdbcType="TIMESTAMP" property="autoInf05D002"/>
+        <result column="auto_inf05_d005" jdbcType="TIMESTAMP" property="autoInf05D005"/>
+        <result column="auto_inf02_d009" jdbcType="TIMESTAMP" property="autoInf02D009"/>
+        <result column="auto_inf02_d010" jdbcType="TIMESTAMP" property="autoInf02D010"/>
+        <result column="auto_inf05_d004" jdbcType="TIMESTAMP" property="autoInf05D004"/>
+        <result column="auto_inf05_d003" jdbcType="TIMESTAMP" property="autoInf05D003"/>
+        <result column="auto_inf05_d006" jdbcType="TIMESTAMP" property="autoInf05D006"/>
+        <result column="auto_inf05_d007" jdbcType="TIMESTAMP" property="autoInf05D007"/>
+        <result column="auto_inf05_d008" jdbcType="TIMESTAMP" property="autoInf05D008"/>
+        <result column="auto_inf05_d009" jdbcType="TIMESTAMP" property="autoInf05D009"/>
+        <result column="pub_impflg" jdbcType="BIGINT" property="pubImpflg"/>
+        <result column="auto_inf05_c0041" jdbcType="TIMESTAMP" property="autoInf05C0041"/>
+        <result column="auto_inf05_c0261" jdbcType="TIMESTAMP" property="autoInf05C0261"/>
+        <result column="auto_inf05_c060" jdbcType="BIGINT" property="autoInf05C060"/>
+        <result column="auto_inf05_c061" jdbcType="NVARCHAR" property="autoInf05C061"/>
+        <result column="auto_inf05_c062" jdbcType="NVARCHAR" property="autoInf05C062"/>
+        <result column="auto_inf05_c063" jdbcType="NVARCHAR" property="autoInf05C063"/>
+        <result column="auto_inf05_c064" jdbcType="NVARCHAR" property="autoInf05C064"/>
+        <result column="auto_inf05_c065" jdbcType="NVARCHAR" property="autoInf05C065"/>
+        <result column="auto_inf05_c066" jdbcType="NVARCHAR" property="autoInf05C066"/>
+        <result column="auto_inf05_c067" jdbcType="NVARCHAR" property="autoInf05C067"/>
+        <result column="auto_inf05_c068" jdbcType="NVARCHAR" property="autoInf05C068"/>
+        <!--<result column="auto_inf05_c069" jdbcType="INTEGER" property="autoInf05C069"/>-->
+        <result column="auto_inf05_c070" jdbcType="NVARCHAR" property="autoInf05C070"/>
+        <result column="auto_inf05_c071" jdbcType="NVARCHAR" property="autoInf05C071"/>
+        <result column="auto_inf05_c072" jdbcType="NVARCHAR" property="autoInf05C072"/>
+        <result column="auto_inf05_c073" jdbcType="BIGINT" property="autoInf05C073"/>
+        <result column="auto_inf05_c074" jdbcType="NVARCHAR" property="autoInf05C074"/>
+        <result column="auto_inf05_c075" jdbcType="NVARCHAR" property="autoInf05C075"/>
+        <result column="auto_inf05_c076" jdbcType="NVARCHAR" property="autoInf05C076"/>
+        <result column="auto_inf05_c077" jdbcType="NVARCHAR" property="autoInf05C077"/>
+        <result column="auto_inf05_c078" jdbcType="NVARCHAR" property="autoInf05C078"/>
+        <result column="auto_inf05_c079" jdbcType="NVARCHAR" property="autoInf05C079"/>
+        <result column="auto_inf05_c080" jdbcType="NUMERIC" property="autoInf05C080"/>
+        <result column="auto_inf05_c081" jdbcType="NUMERIC" property="autoInf05C081"/>
+        <result column="auto_inf05_c082" jdbcType="NVARCHAR" property="autoInf05C082"/>
+        <result column="auto_inf05_c083" jdbcType="NUMERIC" property="autoInf05C083"/>
+        <result column="auto_inf05_c084" jdbcType="NVARCHAR" property="autoInf05C084"/>
+        <result column="auto_inf05_c085" jdbcType="NVARCHAR" property="autoInf05C085"/>
+        <result column="auto_inf05_c086" jdbcType="NVARCHAR" property="autoInf05C086"/>
+        <result column="auto_inf05_c087" jdbcType="NVARCHAR" property="autoInf05C087"/>
+        <result column="auto_inf05_c088" jdbcType="NVARCHAR" property="autoInf05C088"/>
+        <result column="auto_inf05_c089" jdbcType="NVARCHAR" property="autoInf05C089"/>
+        <result column="auto_inf05_c090" jdbcType="NVARCHAR" property="autoInf05C090"/>
+        <result column="auto_inf05_zksyqhccs" jdbcType="BIGINT" property="autoInf05Zksyqhccs"/>
+        <result column="auto_inf05_qxstep" jdbcType="NVARCHAR" property="autoInf05Qxstep"/>
+        <result column="auto_inf05_qxsteptime" jdbcType="TIMESTAMP" property="autoInf05Qxsteptime"/>
+        <result column="auto_inf05_displacement" jdbcType="NVARCHAR" property="autoInf05Displacement"/>
+        <result column="auto_inf05_isbaodancomplete" jdbcType="BIGINT" property="autoInf05Isbaodancomplete"/>
+        <result column="auto_inf05_isbaodanpunctuality" jdbcType="BIGINT" property="autoInf05Isbaodanpunctuality"/>
+        <result column="auto_inf05_serviceattitude" jdbcType="NVARCHAR" property="autoInf05Serviceattitude"/>
+        <result column="auto_inf05_isarriveontime" jdbcType="BIGINT" property="autoInf05Isarriveontime"/>
+        <result column="auto_inf05_isstandard" jdbcType="BIGINT" property="autoInf05Isstandard"/>
+        <result column="auto_inf05_peichangjine" jdbcType="NUMERIC" property="autoInf05Peichangjine"/>
+        <result column="auto_inf05_bears" jdbcType="NVARCHAR" property="autoInf05Bears"/>
+        <result column="auto_inf05_youhaoprice" jdbcType="NUMERIC" property="autoInf05Youhaoprice"/>
+        <result column="auto_inf05_compensationfees" jdbcType="NUMERIC" property="autoInf05Compensationfees"/>
+        <result column="auto_inf05_source" jdbcType="NVARCHAR" property="autoInf05Source"/>
+        <result column="auto_inf05_beforetime" jdbcType="TIMESTAMP" property="autoInf05Beforetime"/>
+        <result column="auto_inf05_aftertime" jdbcType="TIMESTAMP" property="autoInf05Aftertime"/>
+        <result column="auto_inf05_getkilometre" jdbcType="NVARCHAR" property="autoInf05Getkilometre"/>
+        <result column="auto_inf05_returnkilometre" jdbcType="NVARCHAR" property="autoInf05Returnkilometre"/>
+        <result column="auto_inf05_detectstatus" jdbcType="INTEGER" property="autoInf05Detectstatus"/>
+        <result column="auto_inf05_daymileage" jdbcType="NVARCHAR" property="autoInf05Daymileage"/>
+        <result column="auto_inf05_delegaadmin" jdbcType="NVARCHAR" property="autoInf05Delegaadmin"/>
+        <result column="auto_inf05_delegaadminphone" jdbcType="NVARCHAR" property="autoInf05Delegaadminphone"/>
+        <result column="auto_inf05_ftpphotouser" jdbcType="NVARCHAR" property="autoInf05Ftpphotouser"/>
+        <result column="auto_inf05_offlineordertype" jdbcType="NVARCHAR" property="autoInf05Offlineordertype"/>
+        <result column="auto_inf05_ssarisks" jdbcType="NVARCHAR" property="autoInf05Ssarisks"/>
+        <result column="auto_inf05_emercontact" jdbcType="NVARCHAR" property="autoInf05Emercontact"/>
+        <result column="auto_inf05_emercontactphone" jdbcType="NVARCHAR" property="autoInf05Emercontactphone"/>
+        <result column="auto_inf05_tankcapacity" jdbcType="NVARCHAR" property="autoInf05Tankcapacity"/>
+        <result column="auto_inf05_gcarlon" jdbcType="NVARCHAR" property="autoInf05Gcarlon"/>
+        <result column="auto_inf05_gcarlat" jdbcType="NVARCHAR" property="autoInf05Gcarlat"/>
+        <result column="auto_inf05_rcarlon" jdbcType="NVARCHAR" property="autoInf05Rcarlon"/>
+        <result column="auto_inf05_rcarlat" jdbcType="NVARCHAR" property="autoInf05Rcarlat"/>
+        <result column="auto_inf05_carlon" jdbcType="NVARCHAR" property="autoInf05Carlon"/>
+        <result column="auto_inf05_carlat" jdbcType="NVARCHAR" property="autoInf05Carlat"/>
+        <result column="auto_inf05_vstate" jdbcType="NVARCHAR" property="autoInf05Vstate"/>
+        <result column="auto_inf05_rprice" jdbcType="NUMERIC" property="autoInf05Rprice"/>
+        <result column="auto_inf05_rpreason" jdbcType="NVARCHAR" property="autoInf05Rpreason"/>
+        <result column="auto_inf05_oprice" jdbcType="NUMERIC" property="autoInf05Oprice"/>
+        <result column="auto_inf05_opreason" jdbcType="NVARCHAR" property="autoInf05Opreason"/>
+        <result column="auto_inf05_oils" jdbcType="NVARCHAR" property="autoInf05Oils"/>
+        <result column="auto_inf05_qmileage" jdbcType="NVARCHAR" property="autoInf05Qmileage"/>
+        <result column="auto_inf05_qoilm" jdbcType="NVARCHAR" property="autoInf05Qoilm"/>
+        <result column="auto_inf05_tqmileage" jdbcType="NVARCHAR" property="autoInf05Tqmileage"/>
+        <result column="auto_inf05_tqoilm" jdbcType="NVARCHAR" property="autoInf05Tqoilm"/>
+        <result column="auto_inf05_qtime" jdbcType="TIMESTAMP" property="autoInf05Qtime"/>
+        <result column="auto_inf05_htime" jdbcType="TIMESTAMP" property="autoInf05Htime"/>
+        <result column="auto_inf05_duprice" jdbcType="NUMERIC" property="autoInf05Duprice"/>
+        <result column="auto_inf05_hdprice" jdbcType="NUMERIC" property="autoInf05Hdprice"/>
+        <result column="auto_inf05_hdaverage" jdbcType="NUMERIC" property="autoInf05Hdaverage"/>
+        <result column="auto_inf05_rentamt" jdbcType="NUMERIC" property="autoInf05Rentamt"/>
+        <result column="auto_inf05_partner" jdbcType="NVARCHAR" property="autoInf05Partner"/>
+        <result column="auto_inf05_c091" jdbcType="NVARCHAR" property="autoInf05C091"/>
+        <result column="auto_inf05_c092" jdbcType="NVARCHAR" property="autoInf05C092"/>
+        <result column="auto_inf05_c093" jdbcType="NVARCHAR" property="autoInf05C093"/>
+        <result column="auto_inf05_c094" jdbcType="NVARCHAR" property="autoInf05C094"/>
+        <result column="auto_inf05_c095" jdbcType="NVARCHAR" property="autoInf05C095"/>
+        <result column="auto_inf05_qscname" jdbcType="BIGINT" property="autoInf05Qscname"/>
+        <result column="auto_inf05_extime" jdbcType="NVARCHAR" property="autoInf05Extime"/>
+        <result column="auto_inf05_dqly" jdbcType="NVARCHAR" property="autoInf05Dqly"/>
+        <result column="auto_inf05_jyoil" jdbcType="NVARCHAR" property="autoInf05Jyoil"/>
+        <result column="auto_inf05_maint" jdbcType="BIT" property="autoInf05Maint"/>
+        <result column="auto_inf05_mname" jdbcType="NVARCHAR" property="autoInf05Mname"/>
+        <result column="auto_inf05_mprice" jdbcType="INTEGER" property="autoInf05Mprice"/>
+        <result column="auto_inf05_mpcode" jdbcType="NVARCHAR" property="autoInf05Mpcode"/>
+        <result column="auto_inf05_beauty" jdbcType="BIT" property="autoInf05Beauty"/>
+        <result column="auto_inf05_bname" jdbcType="NVARCHAR" property="autoInf05Bname"/>
+        <result column="auto_inf5_bprice" jdbcType="INTEGER" property="autoInf5Bprice"/>
+        <result column="auto_inf05_bpcode" jdbcType="NVARCHAR" property="autoInf05Bpcode"/>
+        <result column="auto_inf05_yanghu" jdbcType="BIT" property="autoInf05Yanghu"/>
+        <result column="auto_inf05_yname" jdbcType="NVARCHAR" property="autoInf05Yname"/>
+        <result column="auto_inf5_yprice" jdbcType="INTEGER" property="autoInf5Yprice"/>
+        <result column="auto_inf05_ypcode" jdbcType="NVARCHAR" property="autoInf05Ypcode"/>
+        <result column="auto_inf05_sname" jdbcType="NVARCHAR" property="autoInf05Sname"/>
+        <result column="auto_inf05_sphone" jdbcType="NVARCHAR" property="autoInf05Sphone"/>
+        <result column="auto_inf05_uploadtime" jdbcType="TIMESTAMP" property="autoInf05Uploadtime"/>
+        <result column="auto_inf05_oilprice" jdbcType="NVARCHAR" property="autoInf05Oilprice"/>
+        <result column="auto_inf05_depositpaytime" jdbcType="NVARCHAR" property="autoInf05Depositpaytime"/>
+        <result column="auto_inf05_servertype" jdbcType="NVARCHAR" property="autoInf05Servertype"/>
+        <result column="auto_inf05_baoanno" jdbcType="NVARCHAR" property="autoInf05Baoanno"/>
+        <result column="auto_inf05_keyperson" jdbcType="NVARCHAR" property="autoInf05Keyperson"/>
+        <result column="auto_inf05_submitdate" jdbcType="TIMESTAMP" property="autoInf05Submitdate"/>
+        <!--<result column="auto_inf05_qdsource" jdbcType="BIGINT" property="autoInf05Qdsource"/>-->
+        <result column="auto_inf05_zklimit" jdbcType="NVARCHAR" property="autoInf05Zklimit"/>
+        <result column="auto_inf05_zkcost" jdbcType="NVARCHAR" property="autoInf05Zkcost"/>
+        <result column="auto_inf05_czlimit" jdbcType="NVARCHAR" property="autoInf05Czlimit"/>
+        <result column="auto_inf05_czcost" jdbcType="NVARCHAR" property="autoInf05Czcost"/>
+        <result column="auto_inf05_usetype" jdbcType="NVARCHAR" property="autoInf05Usetype"/>
+        <result column="auto_inf05_rentermemberflag" jdbcType="NVARCHAR" property="autoInf05Rentermemberflag"/>
+        <result column="auto_inf05_centerphone" jdbcType="NVARCHAR" property="autoInf05Centerphone"/>
+        <result column="auto_inf05_appnote" jdbcType="NVARCHAR" property="autoInf05Appnote"/>
+        <result column="auto_inf05_qclatenote" jdbcType="NVARCHAR" property="autoInf05Qclatenote"/>
+        <result column="auto_inf05_sdlatenote" jdbcType="NVARCHAR" property="autoInf05Sdlatenote"/>
+        <result column="auto_inf05_jtbtcost" jdbcType="INTEGER" property="autoInf05Jtbtcost"/>
+        <result column="auto_inf05_taddrlon" jdbcType="NVARCHAR" property="autoInf05Taddrlon"/>
+        <result column="auto_inf05_taddrlat" jdbcType="NVARCHAR" property="autoInf05Taddrlat"/>
+        <result column="auto_inf05_saddrlon" jdbcType="NVARCHAR" property="autoInf05Saddrlon"/>
+        <result column="auto_inf05_saddrlat" jdbcType="NVARCHAR" property="autoInf05Saddrlat"/>
+        <result column="auto_inf05_revedno" jdbcType="NVARCHAR" property="autoInf05Revedno"/>
+        <result column="auto_inf05_townerkilometer" jdbcType="NVARCHAR" property="autoInf05Townerkilometer"/>
+        <result column="auto_inf05_towneroil" jdbcType="NVARCHAR" property="autoInf05Towneroil"/>
+        <result column="auto_inf05_pickuptime" jdbcType="INTEGER" property="autoInf05Pickuptime"/>
+        <result column="auto_inf05_pickupdistance" jdbcType="INTEGER" property="autoInf05Pickupdistance"/>
+        <result column="auto_inf05_iswashcar" jdbcType="BIGINT" property="autoInf05Iswashcar"/>
+        <result column="auto_inf05_takenote" jdbcType="NVARCHAR" property="autoInf05Takenote"/>
+        <result column="auto_inf05_riskcontrolauditstate" jdbcType="NVARCHAR"
+                property="autoInf05Riskcontrolauditstate"/>
+        <result column="auto_inf05_retainer" jdbcType="NVARCHAR" property="autoInf05Retainer"/>
+        <result column="auto_inf05_userid" jdbcType="NVARCHAR" property="autoInf05Userid"/>
+        <result column="auto_inf05_sqflag" jdbcType="NVARCHAR" property="autoInf05Sqflag"/>
+        <result column="auto_inf05_realcost" jdbcType="NUMERIC" property="autoInf05Realcost"/>
+        <result column="auto_inf05_timeflag" jdbcType="TIMESTAMP" property="autoInf05Timeflag"/>
+        <result column="auto_inf05_reveoil" jdbcType="NVARCHAR" property="autoInf05Reveoil"/>
+        <result column="auto_inf05_dooil" jdbcType="NVARCHAR" property="autoInf05Dooil"/>
+        <result column="auto_inf05_revekilimiter" jdbcType="NVARCHAR" property="autoInf05Revekilimiter"/>
+        <result column="auto_inf05_dokilimiter" jdbcType="NVARCHAR" property="autoInf05Dokilimiter"/>
+        <result column="auto_inf05_flag" jdbcType="NVARCHAR" property="autoInf05Flag"/>
+        <result column="auto_inf05_flightno" jdbcType="NVARCHAR" property="autoInf05Flightno"/>
+        <result column="auto_inf05_idno" jdbcType="NVARCHAR" property="autoInf05Idno"/>
+        <result column="auto_inf05_guidedayprice" jdbcType="NVARCHAR" property="autoInf05Guidedayprice"/>
+        <result column="auto_inf05_year" jdbcType="NVARCHAR" property="autoInf05Year"/>
+        <result column="auto_inf05_historylist" jdbcType="NVARCHAR" property="autoInf05Historylist"/>
+        <result column="auto_inf05_isqsctype" jdbcType="NVARCHAR" property="autoInf05Isqsctype"/>
+        <result column="auto_inf05_oilscaledenominator" jdbcType="INTEGER" property="autoInf05Oilscaledenominator"/>
+        <result column="auto_inf05_sendtype" jdbcType="NVARCHAR" property="autoInf05Sendtype"/>
+        <result column="auto_inf05_ownerno" jdbcType="NVARCHAR" property="autoInf05Ownerno"/>
+        <result column="auto_inf05_renterno" jdbcType="NVARCHAR" property="autoInf05Renterno"/>
+        <!--<result column="auto_inf05_yanqianflag" jdbcType="NVARCHAR" property="autoInf05Yanqianflag"/>-->
+        <result column="auto_inf05_isfree" jdbcType="NVARCHAR" property="autoInf05Isfree"/>
+        <result column="auto_inf05_freemoney" jdbcType="NVARCHAR" property="autoInf05Freemoney"/>
+        <result column="auto_inf05_ischeckpass" jdbcType="NVARCHAR" property="autoInf05Ischeckpass"/>
+        <result column="auto_inf05_ordertype" jdbcType="NVARCHAR" property="autoInf05Ordertype"/>
+        <result column="auto_inf05_channeltype" jdbcType="NVARCHAR" property="autoInf05Channeltype"/>
+        <result column="auto_inf05_newc005" jdbcType="TIMESTAMP" property="autoInf05Newc005"/>
+        <result column="auto_inf05_newc010" jdbcType="NVARCHAR" property="autoInf05Newc010"/>
+        <result column="auto_inf05_newc010lon" jdbcType="NVARCHAR" property="autoInf05Newc010lon"/>
+        <result column="auto_inf05_newc010lat" jdbcType="NVARCHAR" property="autoInf05Newc010lat"/>
+        <result column="auto_inf05_newc012" jdbcType="NVARCHAR" property="autoInf05Newc012"/>
+        <result column="auto_inf05_newc012lon" jdbcType="NVARCHAR" property="autoInf05Newc012lon"/>
+        <result column="auto_inf05_newc012lat" jdbcType="NVARCHAR" property="autoInf05Newc012lat"/>
+        <result column="auto_inf05_updtimelog" jdbcType="NVARCHAR" property="autoInf05Updtimelog"/>
+        <result column="auto_inf05_updaddrlog" jdbcType="NVARCHAR" property="autoInf05Updaddrlog"/>
+        <result column="auto_inf05_sercompany" jdbcType="NVARCHAR" property="autoInf05Sercompany"/>
+        <result column="auto_inf05_remark" jdbcType="NVARCHAR" property="autoInf05Remark"/>
+        <result column="auto_inf05_ownerlables" jdbcType="NVARCHAR" property="autoInf05Ownerlables"/>
+        <result column="auto_inf05_ownerlevel" jdbcType="NVARCHAR" property="autoInf05Ownerlevel"/>
+        <result column="auto_inf05_tenantlables" jdbcType="NVARCHAR" property="autoInf05Tenantlables"/>
+        <result column="auto_inf05_tenantlevel" jdbcType="NVARCHAR" property="autoInf05Tenantlevel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    auto_inf05_id, A.pub_editflag, A.pub_crttime, A.pub_crtusid, A.pub_fupdtime, A.pub_fupdusid,
+    A.pub_compid, auto_inf05_c001, auto_inf05_c002, auto_inf05_c003, auto_inf05_c004, auto_inf05_c005,
+    auto_inf05_c006, auto_inf05_c007, auto_inf05_c008, auto_inf05_c009, auto_inf05_c010,
+    auto_inf05_c011, auto_inf05_c012, auto_inf05_c015, auto_inf05_c014, auto_inf05_c013, 
+    auto_inf05_c016, auto_inf05_c017, auto_inf05_c018, auto_inf05_c019, auto_inf05_c020, 
+    auto_inf05_c021, auto_inf05_c022, auto_inf05_c025, auto_inf05_c024, auto_inf05_c023, 
+    auto_inf05_c026, auto_inf05_c027, auto_inf05_c028, auto_inf05_c029, auto_inf05_c050, 
+    auto_inf05_c051, auto_inf05_c052, auto_inf05_c055, auto_inf05_c054, auto_inf05_c053, 
+    auto_inf05_c056, auto_inf05_c058, auto_inf05_c057, auto_inf05_c059, auto_inf05_i001, 
+    auto_inf05_i002, auto_inf05_i005, auto_inf05_i004, auto_inf05_i003, auto_inf05_i006, 
+    auto_inf05_i007, auto_inf05_i008, auto_inf05_i009, auto_inf05_n001, auto_inf05_n002, 
+    auto_inf05_n005, auto_inf05_n004, auto_inf05_n003, auto_inf05_n006, auto_inf05_d001, 
+    auto_inf05_d002, auto_inf05_d005, auto_inf02_d009, auto_inf02_d010, auto_inf05_d004, 
+    auto_inf05_d003, auto_inf05_d006, auto_inf05_d007, auto_inf05_d008, auto_inf05_d009, 
+    A.pub_impflg, auto_inf05_c0041, auto_inf05_c0261, auto_inf05_c060, auto_inf05_c061,
+    auto_inf05_c062, auto_inf05_c063, auto_inf05_c064, auto_inf05_c065, auto_inf05_c066, 
+    auto_inf05_c067, auto_inf05_c068, /*auto_inf05_c069,*/ auto_inf05_c070, auto_inf05_c071,
+    auto_inf05_c072, auto_inf05_c073, auto_inf05_c074, auto_inf05_c075, auto_inf05_c076, 
+    auto_inf05_c077, auto_inf05_c078, auto_inf05_c079, auto_inf05_c080, auto_inf05_c081, 
+    auto_inf05_c082, auto_inf05_c083, auto_inf05_c084, auto_inf05_c085, auto_inf05_c086, 
+    auto_inf05_c087, auto_inf05_c088, auto_inf05_c089, auto_inf05_c090, auto_inf05_zksyqhccs, 
+    auto_inf05_qxstep, auto_inf05_qxsteptime, auto_inf05_displacement, auto_inf05_isbaodancomplete, 
+    auto_inf05_isbaodanpunctuality, auto_inf05_serviceattitude, auto_inf05_isarriveontime, 
+    auto_inf05_isstandard, auto_inf05_peichangjine, auto_inf05_bears, auto_inf05_youhaoprice, 
+    auto_inf05_compensationfees, auto_inf05_source, auto_inf05_beforetime, auto_inf05_aftertime, 
+    auto_inf05_getkilometre, auto_inf05_returnkilometre, auto_inf05_detectstatus, auto_inf05_daymileage, 
+    auto_inf05_delegaadmin, auto_inf05_delegaadminphone, auto_inf05_ftpphotouser, auto_inf05_offlineordertype, 
+    auto_inf05_ssarisks, auto_inf05_emercontact, auto_inf05_emercontactphone, auto_inf05_tankcapacity, 
+    auto_inf05_gcarlon, auto_inf05_gcarlat, auto_inf05_rcarlon, auto_inf05_rcarlat, auto_inf05_carlon, 
+    auto_inf05_carlat, auto_inf05_vstate, auto_inf05_rprice, auto_inf05_rpreason, auto_inf05_oprice, 
+    auto_inf05_opreason, auto_inf05_oils, auto_inf05_qmileage, auto_inf05_qoilm, auto_inf05_tqmileage, 
+    auto_inf05_tqoilm, auto_inf05_qtime, auto_inf05_htime, auto_inf05_duprice, auto_inf05_hdprice, 
+    auto_inf05_hdaverage, auto_inf05_rentamt, auto_inf05_partner, auto_inf05_c091, auto_inf05_c092, 
+    auto_inf05_c093, auto_inf05_c094, auto_inf05_c095, auto_inf05_qscname, auto_inf05_extime, 
+    dbo.fun_get_dictdata('p_qdsource',auto_inf05_dqly,'1') auto_inf05_dqly, auto_inf05_jyoil,
+    auto_inf05_maint, auto_inf05_mname, auto_inf05_mprice,
+    auto_inf05_mpcode, auto_inf05_beauty, auto_inf05_bname, auto_inf5_bprice, auto_inf05_bpcode, 
+    auto_inf05_yanghu, auto_inf05_yname, auto_inf5_yprice, auto_inf05_ypcode, auto_inf05_sname, 
+    auto_inf05_sphone, auto_inf05_uploadtime, auto_inf05_oilprice, auto_inf05_depositpaytime, 
+    auto_inf05_servertype, auto_inf05_baoanno, auto_inf05_keyperson, auto_inf05_submitdate, 
+    /*auto_inf05_qdsource,*/ auto_inf05_zklimit,
+    dbo.fun_get_dictdata_multis('p_zkpostreason',auto_inf05_zkcost) auto_inf05_zkcost, auto_inf05_czlimit,
+    dbo.fun_get_dictdata_multis('p_postreason',auto_inf05_czcost) auto_inf05_czcost,
+    auto_inf05_usetype, dbo.fun_get_dictdata('p_renterflag',auto_inf05_rentermemberflag,'1') auto_inf05_rentermemberflag,
+    auto_inf05_centerphone, auto_inf05_appnote,
+    auto_inf05_qclatenote, auto_inf05_sdlatenote, auto_inf05_jtbtcost, auto_inf05_taddrlon, 
+    auto_inf05_taddrlat, auto_inf05_saddrlon, auto_inf05_saddrlat, auto_inf05_revedno, 
+    auto_inf05_townerkilometer, auto_inf05_towneroil, auto_inf05_pickuptime, auto_inf05_pickupdistance, 
+    auto_inf05_iswashcar, auto_inf05_takenote, auto_inf05_riskcontrolauditstate, auto_inf05_retainer, 
+    auto_inf05_userid, auto_inf05_sqflag, auto_inf05_realcost, auto_inf05_timeflag, auto_inf05_reveoil, 
+    auto_inf05_dooil, auto_inf05_revekilimiter, auto_inf05_dokilimiter, auto_inf05_flag, 
+    auto_inf05_flightno, auto_inf05_idno, auto_inf05_guidedayprice, auto_inf05_year, 
+    auto_inf05_historylist, auto_inf05_isqsctype, auto_inf05_oilscaledenominator, auto_inf05_sendtype, 
+    auto_inf05_ownerno, auto_inf05_renterno, /*auto_inf05_yanqianflag,*/ auto_inf05_isfree,
+    auto_inf05_freemoney, auto_inf05_ischeckpass, auto_inf05_ordertype, auto_inf05_channeltype, 
+    auto_inf05_newc005, auto_inf05_newc010, auto_inf05_newc010lon, auto_inf05_newc010lat, 
+    auto_inf05_newc012, auto_inf05_newc012lon, auto_inf05_newc012lat, auto_inf05_updtimelog, 
+    auto_inf05_updaddrlog, auto_inf05_sercompany, auto_inf05_remark, auto_inf05_ownerlables, 
+    auto_inf05_ownerlevel, auto_inf05_tenantlables, auto_inf05_tenantlevel
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auto_infor_005 A
+        where auto_inf05_id = #{autoInf05Id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectTransByCond"
+            parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auto_infor_005 A
+        where 1 = 1
+        <include refid="singleCond"></include>
+    </select>
+
+    <select id="selectSingleByCond"
+            parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auto_infor_005 A
+        where 1=1
+        <include refid="singleCond"></include>
+    </select>
+
+    <select id="selectHisCountByCond"
+            parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultType="java.lang.Integer">
+        select
+        count(A.auto_inf05_id)
+        from auto_infor_005_history A
+        where 1=1
+        and (A.auto_inf05_c004 is not null or A.auto_inf05_htime is not null)
+        and A.auto_inf05_c073 is not null
+        and A.auto_inf05_c050 is not null
+        and left(convert(varchar(10), ISNULL(A.auto_inf05_c004, A.auto_inf05_htime), 112), 4) = left(convert(varchar(10),#{autoInf05C004},112), 4)
+    </select>
+
+    <select id="selectHisListByCond"
+            parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultMap="BaseResultMap">
+        SELECT
+        top (#{pageSize})
+        <include refid="Base_Column_List"/>, A.pic
+        FROM
+        ( SELECT row_number ( ) over ( ORDER BY auto_inf05_id ) AS rownumber,
+        <include refid="Base_Column_List"/>, P.auto_check_image pic
+        from auto_infor_005_history A left join auto_infor_check P
+        on A.auto_inf05_id = P.auto_check_billid
+        where
+        left(convert(varchar(10), ISNULL(A.auto_inf05_c004, A.auto_inf05_htime), 112), 4) = left(convert(varchar(10),#{autoInf05C004},112), 4)
+        and (A.auto_inf05_c004 is not null or A.auto_inf05_htime is not null)
+        and A.auto_inf05_c073 is not null
+        and A.auto_inf05_c050 is not null
+        ) A where rownumber > #{page}
+    </select>
+
+    <select id="selectListByCond"
+            parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auto_infor_005 A
+        where 1=1
+        <if test="autoInf05C004 != null">
+            and left(convert(varchar(10), ISNULL(auto_inf05_c004, auto_inf05_htime),112), 4) = left(convert(varchar(10),#{autoInf05C004},112), 4)
+        </if>
+        <if test="autoInf05C002 != null">
+            and auto_inf05_c002 = #{autoInf05C002}
+        </if>
+        <if test="autoInf05C050 != null">
+            and auto_inf05_c050 = #{autoInf05C050}
+        </if>
+        <if test="tackBackOrderNoList != null">
+            and auto_inf05_c073 in
+            <foreach item="item" index="index" collection="tackBackOrderNoList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="autoInf05Sercompany != null">
+            and auto_inf05_sercompany = #{autoInf05Sercompany}
+        </if>
+    </select>
+
+    <select id="queryCountByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        auto_infor_005 left join auto_flow_005 on auto_inf05_id = auto_fw05_billid
+        left join auto_compinfo on auto_inf05_sercompany = auto_cpinfo_comp2
+        left join auto_recordinfo on auto_inf05_c050 = auto_red_orderno
+        and dbo.fun_get_dictdata('p_autotasendc1',auto_inf05_c002,'1') =
+        dbo.fun_get_dictdata('p_stype',auto_red_stype,'1')
+        <where>
+            <include refid="chooseCond"></include>
+            <include refid="cond"></include>
+        </where>
+    </select>
+
+    <select id="queryListByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AotuInfor005Entity"
+            resultMap="BaseResultMap">
+        SELECT
+        top (#{pageSize})
+        <include refid="Base_Column_List"/>
+        FROM
+        ( SELECT row_number ( ) over ( ORDER BY auto_inf05_id ) AS rownumber,
+        <include refid="Base_Column_List"/>
+        FROM auto_infor_005 A
+        where 1=1
+        <include refid="chooseCond"></include>
+        ) A left join auto_flow_005 on auto_inf05_id = auto_fw05_billid
+        left join auto_compinfo on auto_inf05_sercompany = auto_cpinfo_comp2
+        left join auto_recordinfo on auto_inf05_c050 = auto_red_orderno
+        and dbo.fun_get_dictdata('p_autotasendc1',auto_inf05_c002,'1') =
+        dbo.fun_get_dictdata('p_stype',auto_red_stype,'1')
+        <where>
+            rownumber > #{page}
+            <include refid="cond"></include>
+        </where>
+    </select>
+
+    <sql id="chooseCond">
+        <choose>
+            <when test="pickTimeMonthDay != null and pickTimeMonthDay != ''">
+                and convert(varchar(10),ISNULL(auto_inf05_c004, auto_inf05_htime),112) = convert(varchar(10),#{autoInf05C004},112)
+            </when>
+            <otherwise>
+                and datepart(yy, ISNULL(auto_inf05_c004, auto_inf05_htime)) = datepart(yy, #{autoInf05C004})
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="autoInf05C002 != null and autoInf05C002 != ''">
+                and auto_inf05_c002 = #{autoInf05C002}
+            </when>
+            <otherwise>
+                and RIGHT(auto_inf05_c002,1) <![CDATA[ < ]]> 9
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="singleCond">
+        <if test="autoInf05C004 != null">
+            and convert(varchar(10),ISNULL(auto_inf05_c004, auto_inf05_htime),112) = convert(varchar(10),#{autoInf05C004},112)
+        </if>
+        <if test="autoInf05C002 != null">
+            and auto_inf05_c002 = #{autoInf05C002}
+        </if>
+        <if test="autoInf05C050 != null">
+            and auto_inf05_c050 = #{autoInf05C050}
+        </if>
+        <if test="autoInf05C073 != null">
+            and auto_inf05_c073 = #{autoInf05C073}
+        </if>
+        <if test="autoInf05Sercompany != null">
+            and auto_inf05_sercompany = #{autoInf05Sercompany}
+        </if>
+    </sql>
+
+    <sql id="cond">
+        <if test="autoInf05C050 != null">
+            and auto_inf05_c050 = #{autoInf05C050}
+        </if>
+        <if test="autoInf05C073 != null">
+            and auto_inf05_c073 = #{autoInf05C073}
+        </if>
+        <if test="userIdList != null">
+            and auto_inf05_c022 in
+            <foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="autoInf05C023 != null">
+            and auto_inf05_c023 = #{autoInf05C023}
+        </if>
+        <if test="autoInf05C006 != null">
+            and auto_inf05_c006 = #{autoInf05C006}
+        </if>
+        <if test="autoInf05C071 != null and autoInf05C071 != ''">
+            and auto_inf05_c071 = #{autoInf05C071}
+        </if>
+        <if test="autoInf05Source != null and autoInf05Source != ''">
+            and auto_inf05_source = #{autoInf05Source}
+        </if>
+        <if test="autoInf05C072 != null and autoInf05C072 != ''">
+            and auto_inf05_c072 = #{autoInf05C072}
+        </if>
+        <if test="autoInf05Offlineordertype != null and autoInf05Offlineordertype != ''">
+            and auto_inf05_offlineordertype = #{autoInf05Offlineordertype}
+        </if>
+        <if test="cityList != null">
+            and auto_inf05_c008 in
+            <foreach item="item" index="index" collection="cityList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="autoInf05Sercompany != null">
+            and auto_inf05_sercompany = #{autoInf05Sercompany}
+        </if>
+        <if test="isUploadRecord != null">
+            <choose>
+                <when test="isUploadRecord == 1">
+                    and auto_red_file is not null
+                </when>
+                <otherwise>
+                    and auto_red_file is null
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="scheduleStatus != null">
+            <choose>
+                <when test="scheduleStatus == 0">
+                    and auto_fw05_C001 like '%p_flowst_2%'
+                </when>
+                <when test="scheduleStatus == 1 or scheduleStatus == 2">
+                    and auto_fw05_C002 like '%p_flowst_2%'
+                    <if test="scheduleStatus == 1">
+                        and auto_inf05_C003 = 'p_autotasendc2_1'
+                    </if>
+                    <if test="scheduleStatus == 2">
+                        and auto_inf05_C003 = 'p_autotasendc2_2'
+                    </if>
+                </when>
+                <when test="scheduleStatus == 5">
+                    and auto_inf05_C065 = '5'
+                </when>
+                <when test="scheduleStatus == 8">
+                    and auto_inf05_C065 = '1'
+                </when>
+                <when test="scheduleStatus == 3 or scheduleStatus == 4">
+                    and auto_fw05_C009 like '%p_flowst_2%'
+                    <if test="scheduleStatus == 3">
+                        and auto_inf05_C003 = 'p_autotasendc2_1'
+                    </if>
+                    <if test="scheduleStatus == 4">
+                        and auto_inf05_C003 = 'p_autotasendc2_2'
+                    </if>
+                </when>
+                <when test="scheduleStatus == 6 or scheduleStatus == 7">
+                    and auto_fw05_C003 like '%p_flowst_2%'
+                    and auto_inf05_C065 = '0'
+                    <if test="scheduleStatus == 6">
+                        and auto_inf05_sercompany is null
+                    </if>
+                    <if test="scheduleStatus == 7">
+                        and auto_inf05_sercompany is not null
+                    </if>
+                </when>
+
+                <when test="scheduleStatus == 9">
+                    and auto_cpinfo_comp1 in ('p_cl1_001', 'p_cl1_002')
+                    and auto_inf05_C065 = '2'
+                </when>
+                <when test="scheduleStatus == 10">
+                    and auto_cpinfo_comp1 in ('p_cl1_003', 'p_cl1_004')
+                    and auto_inf05_C065 = '2'
+                </when>
+                <when test="scheduleStatus == 11">
+                    and auto_cpinfo_comp1 in ('p_cl1_001', 'p_cl1_002')
+                    and auto_inf05_C065 = '3'
+                </when>
+                <when test="scheduleStatus == 12">
+                    and auto_cpinfo_comp1 in ('p_cl1_003', 'p_cl1_004')
+                    and auto_inf05_C065 = '3'
+                </when>
+                <when test="scheduleStatus == 13">
+                    and auto_cpinfo_comp1 in ('p_cl1_001', 'p_cl1_002')
+                    and auto_fw05_C003 like '%p_flowst_3%'
+                </when>
+                <when test="scheduleStatus == 14">
+                    and auto_cpinfo_comp1 in ('p_cl1_003', 'p_cl1_004')
+                    and auto_fw05_C003 like '%p_flowst_3%'
+                </when>
+                <when test="scheduleStatus == 15">
+                    and auto_cpinfo_comp1 in ('p_cl1_001', 'p_cl1_002')
+                    and auto_fw05_C006 like '%p_flowst_3%'
+                </when>
+                <when test="scheduleStatus == 16">
+                    and auto_cpinfo_comp1 in ('p_cl1_003', 'p_cl1_004')
+                    and auto_fw05_C006 like '%p_flowst_3%'
+                </when>
+
+                <when test="scheduleStatus == 17">
+                    and pub_flowstate like '%p_flowst_4%'
+                    and auto_inf05_C085 != '7'
+                </when>
+                <when test="scheduleStatus == 18">
+                    and pub_flowstate like '%p_flowst_4%'
+                    and auto_inf05_C085 = '7'
+                </when>
+            </choose>
+        </if>
+
+    </sql>
+</mapper>

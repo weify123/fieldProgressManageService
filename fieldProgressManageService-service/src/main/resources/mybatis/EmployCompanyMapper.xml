@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.EmployCompanyMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.EmployCompanyEntity">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="tenant_id" jdbcType="INTEGER" property="tenantId"/>
+        <result column="renyun_id" jdbcType="INTEGER" property="renYunId"/>
+        <result column="first_category" jdbcType="VARCHAR" property="firstCategory"/>
+        <result column="second_category" jdbcType="VARCHAR" property="secondCategory"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="effectived" jdbcType="INTEGER" property="effectived"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, tenant_id, renyun_id, first_category, second_category, email,
+      effectived, is_delete,create_op, create_time, update_op, update_time
+    </sql>
+
+    <select id="queryCompanyByTenantId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employ_company
+        where tenant_id = #{tenantId,jdbcType=INTEGER} and is_delete = 0
+    </select>
+
+    <select id="queryCompanyById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employ_company
+        where id = #{id,jdbcType=INTEGER} and is_delete = 0
+    </select>
+
+    <select id="getObjByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+         from employ_company
+         where second_category = #{name,jdbcType=VARCHAR} and is_delete = 0
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employ_company where is_delete = 0
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.EmployCompanyEntity">
+        update employ_company cp
+        <set>
+            <if test="firstCategory != null and firstCategory != ''">
+                cp.first_category = #{firstCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="secondCategory != null and secondCategory != ''">
+                cp.second_category = #{secondCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantId != null">
+                cp.tenant_id = #{tenantId,jdbcType=INTEGER},
+            </if>
+            <if test="renYunId != null">
+                cp.renyun_id = #{renYunId,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                cp.email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="effectived != null">
+                cp.effectived = #{effectived,jdbcType=INTEGER},
+            </if>
+            cp.update_time = now(),
+            cp.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where cp.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.EmployCompanyEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into employ_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+            <if test="renYunId != null">
+                renyun_id,
+            </if>
+            <if test="firstCategory != null">
+                first_category,
+            </if>
+            <if test="secondCategory != null">
+                second_category,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="effectived != null">
+                effectived,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=INTEGER},
+            </if>
+            <if test="renYunId != null">
+                #{renYunId,jdbcType=INTEGER},
+            </if>
+            <if test="firstCategory != null">
+                #{firstCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="secondCategory != null">
+                #{secondCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="effectived != null">
+                #{effectived,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

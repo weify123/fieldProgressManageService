@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.TransOrderInfoLogMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.TransOrderInfoLogEntity">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType"/>
+    <result column="renew_order_no" jdbcType="VARCHAR" property="renewOrderNo" />
+    <result column="belong_city" jdbcType="VARCHAR" property="belongCity" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="scene_source" jdbcType="INTEGER" property="sceneSource" />
+    <result column="offline_order_type" jdbcType="INTEGER" property="offlineOrderType" />
+    <result column="pick_time" jdbcType="TIMESTAMP" property="pickTime"/>
+    <result column="rent_start_time" jdbcType="TIMESTAMP" property="rentStartTime" />
+    <result column="rent_ent_time" jdbcType="TIMESTAMP" property="rentEntTime" />
+    <result column="rent_amt" jdbcType="DECIMAL" property="rentAmt" />
+    <result column="price_per_day" jdbcType="DECIMAL" property="pricePerDay" />
+    <result column="deposit_pay_time" jdbcType="TIMESTAMP" property="depositPayTime" />
+    <result column="super_supple_risk" jdbcType="VARCHAR" property="superSuppleRisk" />
+    <result column="partner" jdbcType="VARCHAR" property="partner" />
+    <result column="risk_control_audit_state" jdbcType="VARCHAR" property="riskControlAuditState" />
+    <result column="cust_note" jdbcType="LONGVARCHAR" property="custNote" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_op" jdbcType="VARCHAR" property="createOp" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_op" jdbcType="VARCHAR" property="updateOp" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, order_no, order_type, renew_order_no, belong_city, source, scene_source, offline_order_type, pick_time, rent_start_time, rent_ent_time,
+    rent_amt, price_per_day, deposit_pay_time, super_supple_risk, partner, risk_control_audit_state,cust_note,
+    is_delete, create_op, create_time, update_op, update_time
+   </sql>
+
+  <select id="queryByOrderNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from trans_order_info_log
+    where is_delete = 0
+    and order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.TransOrderInfoLogEntity">
+    insert into trans_order_info_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="renewOrderNo != null">
+        renew_order_no,
+      </if>
+      <if test="belongCity != null">
+        belong_city,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="sceneSource != null">
+        scene_source,
+      </if>
+      <if test="offlineOrderType != null">
+        offline_order_type,
+      </if>
+      <if test="pickTime != null">
+        pick_time,
+      </if>
+      <if test="rentStartTime != null">
+        rent_start_time,
+      </if>
+      <if test="rentEntTime != null">
+        rent_ent_time,
+      </if>
+      <if test="rentAmt != null">
+        rent_amt,
+      </if>
+      <if test="pricePerDay != null">
+        price_per_day,
+      </if>
+      <if test="depositPayTime != null">
+        deposit_pay_time,
+      </if>
+      <if test="superSuppleRisk != null">
+        super_supple_risk,
+      </if>
+      <if test="partner != null">
+        partner,
+      </if>
+      <if test="riskControlAuditState != null">
+        risk_control_audit_state,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createOp != null">
+        create_op,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateOp != null">
+        update_op,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="custNote != null">
+        cust_note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="renewOrderNo != null">
+        #{renewOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="belongCity != null">
+        #{belongCity,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="sceneSource != null">
+        #{sceneSource,jdbcType=INTEGER},
+      </if>
+      <if test="offlineOrderType != null">
+        #{offlineOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="pickTime != null">
+        #{pickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentStartTime != null">
+        #{rentStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentEntTime != null">
+        #{rentEntTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentAmt != null">
+        #{rentAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="pricePerDay != null">
+        #{pricePerDay,jdbcType=DECIMAL},
+      </if>
+      <if test="depositPayTime != null">
+        #{depositPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="superSuppleRisk != null">
+        #{superSuppleRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="partner != null">
+        #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="riskControlAuditState != null">
+        #{riskControlAuditState,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createOp != null">
+        #{createOp,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOp != null">
+        #{updateOp,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custNote != null">
+        #{custNote,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

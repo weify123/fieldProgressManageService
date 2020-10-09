@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoRecordInfoMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoRecordInfoEntity">
+    <id column="auto_red_id" jdbcType="BIGINT" property="autoRedId" />
+    <result column="pub_editflag" jdbcType="INTEGER" property="pubEditflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="pub_compid" jdbcType="BIGINT" property="pubCompid" />
+    <result column="auto_red_dtid" jdbcType="BIGINT" property="autoRedDtid" />
+    <result column="auto_red_flowname" jdbcType="NVARCHAR" property="autoRedFlowname" />
+    <result column="auto_red_orderno" jdbcType="NVARCHAR" property="autoRedOrderno" />
+    <result column="auto_red_stype" jdbcType="NVARCHAR" property="autoRedStype" />
+    <result column="auto_red_carno" jdbcType="NVARCHAR" property="autoRedCarno" />
+    <result column="auto_red_qtime" jdbcType="TIMESTAMP" property="autoRedQtime" />
+    <result column="auto_red_file" jdbcType="VARCHAR" property="autoRedFile" />
+    <result column="auto_red_remark" jdbcType="VARCHAR" property="autoRedRemark" />
+    <result column="auto_red_btn" jdbcType="NVARCHAR" property="autoRedBtn" />
+    <result column="auto_red_time" jdbcType="TIMESTAMP" property="autoRedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_red_id, pub_editflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    pub_compid, auto_red_dtid, auto_red_flowname, auto_red_orderno, auto_red_stype, auto_red_carno, 
+    auto_red_qtime, auto_red_file, auto_red_remark, auto_red_btn, auto_red_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_recordinfo
+    where auto_red_id = #{autoRedId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCond" parameterType="com.autoyol.field.progress.manage.entity.sqlserver.AutoRecordInfoEntity" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from auto_recordinfo
+    where auto_red_orderno = #{autoRedOrderno,jdbcType=NVARCHAR}
+    and auto_red_stype = #{autoRedStype,jdbcType=NVARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.TransRentUserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.TransRentUserInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="owner_no" jdbcType="VARCHAR" property="ownerNo"/>
+        <result column="renter_no" jdbcType="VARCHAR" property="renterNo"/>
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName"/>
+        <result column="renter_name" jdbcType="VARCHAR" property="renterName"/>
+        <result column="owner_phone" jdbcType="VARCHAR" property="ownerPhone"/>
+        <result column="renter_phone" jdbcType="VARCHAR" property="renterPhone"/>
+        <result column="owner_level" jdbcType="VARCHAR" property="ownerLevel"/>
+        <result column="renter_level" jdbcType="VARCHAR" property="renterLevel"/>
+        <result column="owner_label" jdbcType="LONGVARCHAR" property="ownerLabel"/>
+        <result column="renter_label" jdbcType="LONGVARCHAR" property="renterLabel"/>
+        <result column="mem_flag" jdbcType="VARCHAR" property="memFlag"/>
+        <result column="renter_use_take_back_time" jdbcType="VARCHAR" property="renterUseTakeBackTime"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, order_no, owner_no, renter_no, owner_name, renter_name, owner_phone, renter_phone, owner_level,
+    renter_level, owner_label, renter_label, mem_flag, renter_use_take_back_time, is_delete, create_op, create_time, update_op, update_time
+  </sql>
+
+    <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trans_rent_user_info t
+        where t.order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByOrderNoList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trans_rent_user_info t
+        where t.is_delete = 0
+        and t.order_no in
+        <foreach item="item" index="index" collection="orderNoList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="queryMaxTackBackTimeByRenterNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    max(t.renter_use_take_back_time)
+    from trans_rent_user_info t
+    where t.renter_no = #{renterNo,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByOrderNo" parameterType="com.autoyol.field.progress.manage.entity.TransRentUserInfoEntity">
+        update trans_rent_user_info
+        set
+        <if test="ownerNo != null ">
+            owner_no = #{ownerNo,jdbcType=VARCHAR},
+        </if>
+        <if test="renterNo != null ">
+            renter_no = #{renterNo,jdbcType=VARCHAR},
+        </if>
+        <if test="ownerName != null ">
+            owner_name = #{ownerName,jdbcType=VARCHAR},
+        </if>
+        <if test="renterName != null ">
+            renter_name = #{renterName,jdbcType=VARCHAR},
+        </if>
+        <if test="ownerPhone != null ">
+            owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+        </if>
+        <if test="renterPhone != null ">
+            renter_phone = #{renterPhone,jdbcType=VARCHAR},
+        </if>
+        <if test="ownerLevel != null ">
+            owner_level = #{ownerLevel,jdbcType=VARCHAR},
+        </if>
+        <if test="renterLevel != null ">
+            renter_level = #{renterLevel,jdbcType=VARCHAR},
+        </if>
+        <if test="ownerLabel != null ">
+            owner_label = #{ownerLabel,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="renterLabel != null ">
+            renter_label = #{renterLabel,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="memFlag != null ">
+            mem_flag = #{memFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="renterUseTakeBackTime != null ">
+            renter_use_take_back_time = #{renterUseTakeBackTime,jdbcType=VARCHAR},
+        </if>
+        update_time = now(),
+        update_op = #{updateOp,jdbcType=VARCHAR}
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.TransRentUserInfoEntity">
+        insert into trans_rent_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="ownerNo != null">
+                owner_no,
+            </if>
+            <if test="renterNo != null">
+                renter_no,
+            </if>
+            <if test="ownerName != null">
+                owner_name,
+            </if>
+            <if test="renterName != null">
+                renter_name,
+            </if>
+            <if test="ownerPhone != null">
+                owner_phone,
+            </if>
+            <if test="renterPhone != null">
+                renter_phone,
+            </if>
+            <if test="ownerLevel != null">
+                owner_level,
+            </if>
+            <if test="renterLevel != null">
+                renter_level,
+            </if>
+            <if test="ownerLabel != null">
+                owner_label,
+            </if>
+            <if test="renterLabel != null">
+                renter_label,
+            </if>
+            <if test="memFlag != null">
+                mem_flag,
+            </if>
+            <if test="renterUseTakeBackTime != null">
+                renter_use_take_back_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerNo != null">
+                #{ownerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="renterNo != null">
+                #{renterNo,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerName != null">
+                #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="renterName != null">
+                #{renterName,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerPhone != null">
+                #{ownerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="renterPhone != null">
+                #{renterPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerLevel != null">
+                #{ownerLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="renterLevel != null">
+                #{renterLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerLabel != null">
+                #{ownerLabel,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="renterLabel != null">
+                #{renterLabel,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="memFlag != null">
+                #{memFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="renterUseTakeBackTime != null">
+                #{renterUseTakeBackTime,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

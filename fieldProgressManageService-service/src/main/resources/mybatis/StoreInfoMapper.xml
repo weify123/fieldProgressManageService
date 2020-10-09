@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.StoreInfoMapper">
+    <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.StoreInfoEntity">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="store_full_name" jdbcType="VARCHAR" property="storeFullName"/>
+        <result column="store_name" jdbcType="VARCHAR" property="storeName"/>
+        <result column="branch_company" jdbcType="VARCHAR" property="branchCompany"/>
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="district_county" jdbcType="VARCHAR" property="districtCounty"/>
+        <result column="store_address" jdbcType="VARCHAR" property="storeAddress"/>
+        <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
+        <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
+        <result column="store_contact_name" jdbcType="VARCHAR" property="storeContactName"/>
+        <result column="store_contact_mobile" jdbcType="VARCHAR" property="storeContactMobile"/>
+        <result column="start_time" jdbcType="CHAR" property="startTime"/>
+        <result column="end_time" jdbcType="CHAR" property="endTime"/>
+        <result column="serve_status" jdbcType="INTEGER" property="serveStatus"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="create_op" jdbcType="VARCHAR" property="createOp"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_op" jdbcType="VARCHAR" property="updateOp"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, store_full_name, store_name, branch_company, city_id, district_county,
+      store_address, longitude, latitude, store_contact_name, store_contact_mobile, start_time,
+      end_time, serve_status, is_delete, create_op, create_time, update_op, update_time
+  </sql>
+
+    <select id="findAllByCond" parameterType="com.autoyol.field.progress.manage.entity.StoreInfoEntity"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from store_info s where s.is_delete = 0
+        <if test="id != null">
+            AND s.id = #{id}
+        </if>
+        <if test="cityId != null">
+            AND s.city_id = #{cityId}
+        </if>
+        <if test="serveStatus != null">
+            AND s.serve_status = #{serveStatus}
+        </if>
+    </select>
+
+    <select id="existCond" parameterType="com.autoyol.field.progress.manage.entity.StoreInfoEntity"
+            resultType="java.lang.Integer">
+        select count(s.id) from store_info s where s.is_delete = 0
+        <if test="storeName != null and storeName != ''">
+            and s.store_name = #{storeName,jdbcType=VARCHAR}
+        </if>
+        <if test="storeFullName != null and storeFullName != ''">
+            and s.store_full_name = #{storeFullName,jdbcType=VARCHAR}
+        </if>
+        <if test="branchCompany != null and branchCompany != ''">
+            and s.branch_company = #{branchCompany,jdbcType=VARCHAR}
+        </if>
+        <if test="id != null">
+            and s.id != #{id,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <update id="updateById" parameterType="com.autoyol.field.progress.manage.entity.StoreInfoEntity">
+        update store_info s
+        <set>
+            <if test="storeFullName != null and storeFullName != ''">
+                s.store_full_name = #{storeFullName,jdbcType=VARCHAR},
+            </if>
+            <if test="storeName != null and storeName != ''">
+                s.store_name = #{storeName,jdbcType=VARCHAR},
+            </if>
+            <if test="branchCompany != null and branchCompany != ''">
+                s.branch_company = #{branchCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                s.city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="districtCounty != null and districtCounty != ''">
+                s.district_county = #{districtCounty,jdbcType=VARCHAR},
+            </if>
+            <if test="storeAddress != null and storeAddress != ''">
+                s.store_address = #{storeAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                s.longitude = #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                s.latitude = #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="storeContactName != null and storeContactName != ''">
+                s.store_contact_name = #{storeContactName,jdbcType=VARCHAR},
+            </if>
+            <if test="storeContactMobile != null and storeContactMobile != ''">
+                s.store_contact_mobile = #{storeContactMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                s.start_time = #{startTime,jdbcType=CHAR},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                s.end_time = #{endTime,jdbcType=CHAR},
+            </if>
+            <if test="serveStatus != null">
+                s.serve_status = #{serveStatus,jdbcType=INTEGER},
+            </if>
+            s.update_time = now(),
+            s.update_op = #{updateOp,jdbcType=VARCHAR}
+        </set>
+        where s.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="batchUpdate">
+        <foreach collection ="list" item="item" index= "index" open="" close="" separator =";">
+            update store_info t
+            <set>
+                t.serve_status = #{item.serveStatus},
+                t.store_name = #{item.storeName},
+                t.store_full_name = #{item.storeFullName},
+                t.branch_company = #{item.branchCompany},
+                t.district_county = #{item.districtCounty},
+                t.store_address = #{item.storeAddress},
+                t.store_contact_name = #{item.storeContactName},
+                t.store_contact_mobile = #{item.storeContactMobile},
+                t.start_time = #{item.startTime},
+                t.end_time = #{item.endTime},
+                t.update_time = now(),
+                t.update_op = #{item.updateOp}
+            </set>
+            <where>
+                t.id =#{item.id}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="batchInsert">
+        INSERT INTO store_info(store_full_name, store_name,
+        branch_company, city_id, district_county,
+        store_address,store_contact_name, store_contact_mobile, start_time,
+        end_time, create_op)
+        VALUES
+        <foreach collection="list" item="s" separator=",">
+            (#{s.storeFullName,jdbcType=VARCHAR}, #{s.storeName,jdbcType=VARCHAR},
+            #{s.branchCompany,jdbcType=VARCHAR}, #{s.cityId,jdbcType=INTEGER}, #{s.districtCounty,jdbcType=VARCHAR},
+            #{s.storeAddress,jdbcType=VARCHAR},#{s.storeContactName,jdbcType=VARCHAR},
+            #{s.storeContactMobile,jdbcType=VARCHAR}, #{s.startTime,jdbcType=CHAR},
+            #{s.endTime,jdbcType=CHAR}, #{s.createOp,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.autoyol.field.progress.manage.entity.StoreInfoEntity">
+    insert into store_info (id, store_full_name, store_name, 
+      branch_company, city_id, district_county, 
+      store_address, longitude, latitude, 
+      store_contact_name, store_contact_mobile, start_time, 
+      end_time, serve_status, is_delete,
+      create_op, create_time, update_op, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{storeFullName,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, 
+      #{branchCompany,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, #{districtCounty,jdbcType=VARCHAR}, 
+      #{storeAddress,jdbcType=VARCHAR}, #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, 
+      #{storeContactName,jdbcType=VARCHAR}, #{storeContactMobile,jdbcType=VARCHAR}, #{startTime,jdbcType=CHAR}, 
+      #{endTime,jdbcType=CHAR}, #{serveStatus,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, 
+      #{createOp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateOp,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.autoyol.field.progress.manage.entity.StoreInfoEntity">
+        insert into store_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="storeFullName != null">
+                store_full_name,
+            </if>
+            <if test="storeName != null">
+                store_name,
+            </if>
+            <if test="branchCompany != null">
+                branch_company,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="districtCounty != null">
+                district_county,
+            </if>
+            <if test="storeAddress != null">
+                store_address,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="storeContactName != null">
+                store_contact_name,
+            </if>
+            <if test="storeContactMobile != null">
+                store_contact_mobile,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="serveStatus != null">
+                serve_status,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createOp != null">
+                create_op,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateOp != null">
+                update_op,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="storeFullName != null">
+                #{storeFullName,jdbcType=VARCHAR},
+            </if>
+            <if test="storeName != null">
+                #{storeName,jdbcType=VARCHAR},
+            </if>
+            <if test="branchCompany != null">
+                #{branchCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="districtCounty != null">
+                #{districtCounty,jdbcType=VARCHAR},
+            </if>
+            <if test="storeAddress != null">
+                #{storeAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="storeContactName != null">
+                #{storeContactName,jdbcType=VARCHAR},
+            </if>
+            <if test="storeContactMobile != null">
+                #{storeContactMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=CHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=CHAR},
+            </if>
+            <if test="serveStatus != null">
+                #{serveStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createOp != null">
+                #{createOp,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateOp != null">
+                #{updateOp,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

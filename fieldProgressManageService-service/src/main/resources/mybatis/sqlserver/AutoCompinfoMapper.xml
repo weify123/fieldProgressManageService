@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autoyol.field.progress.manage.mapper.sqlserver.AutoCompinfoMapper">
+  <resultMap id="BaseResultMap" type="com.autoyol.field.progress.manage.entity.sqlserver.AutoCompinfoEntity">
+    <id column="auto_cpinfo_id" jdbcType="BIGINT" property="autoCpinfoId" />
+    <result column="pub_ediflag" jdbcType="INTEGER" property="pubEdiflag" />
+    <result column="pub_crttime" jdbcType="TIMESTAMP" property="pubCrttime" />
+    <result column="pub_crtusid" jdbcType="BIGINT" property="pubCrtusid" />
+    <result column="pub_fupdtime" jdbcType="TIMESTAMP" property="pubFupdtime" />
+    <result column="pub_fupdusid" jdbcType="BIGINT" property="pubFupdusid" />
+    <result column="pub_compid" jdbcType="BIGINT" property="pubCompid" />
+    <result column="pub_imgflg" jdbcType="INTEGER" property="pubImgflg" />
+    <result column="auto_cpinfo_comp1" jdbcType="NVARCHAR" property="autoCpinfoComp1" />
+    <result column="auto_cpinfo_comp2" jdbcType="NVARCHAR" property="autoCpinfoComp2" />
+    <result column="auto_cpinfo_valid" jdbcType="NVARCHAR" property="autoCpinfoValid" />
+    <result column="auto_cpinfo_email" jdbcType="NVARCHAR" property="autoCpinfoEmail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auto_cpinfo_id, pub_ediflag, pub_crttime, pub_crtusid, pub_fupdtime, pub_fupdusid, 
+    pub_compid, pub_imgflg, auto_cpinfo_comp1, auto_cpinfo_comp2, auto_cpinfo_valid, 
+    auto_cpinfo_email
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_compinfo
+    where auto_cpinfo_id = #{autoCpinfoId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    auto_cpinfo_id, pub_ediflag, dbo.fun_get_dictdata('p_companylevel1',auto_cpinfo_comp1,'1') auto_cpinfo_comp1,
+    dbo.fun_get_dictdata('p_company',auto_cpinfo_comp2,'1') auto_cpinfo_comp2, auto_cpinfo_email
+    from auto_compinfo
+    where auto_cpinfo_valid = 1
+  </select>
+  <select id="queryCompanyBySecondName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from auto_compinfo
+    where auto_cpinfo_comp2 = #{name} and auto_cpinfo_valid = 1
+  </select>
+
+</mapper>

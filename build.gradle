@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'com.autoyol'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	maven{url "http://10.0.3.208:8081/nexus/content/groups/public/"}
+	maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+    mavenCentral()
+}
+
+subprojects {
+    repositories {
+        maven{url "http://10.0.3.208:8081/nexus/content/groups/public/"}
+        maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        mavenCentral()
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
